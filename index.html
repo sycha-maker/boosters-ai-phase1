@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 침투 제고 캠페인 — Phase 1 실행 계획</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #F7F6F3;
+      --surface:    #FFFFFF;
+      --border:     #E5E3DC;
+      --text-main:  #1A1916;
+      --text-sub:   #6B6860;
+      --text-muted: #A09E99;
+      --accent:     #4A6CF7;
+      --accent-lt:  #EEF1FE;
+      --amber:      #D97706;
+      --amber-lt:   #FEF3C7;
+      --green:      #059669;
+      --green-lt:   #D1FAE5;
+      --rose:       #E11D48;
+      --rose-lt:    #FFE4E8;
+      --purple:     #7C3AED;
+      --purple-lt:  #EDE9FE;
+      --shadow-sm:  0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+      --radius:     12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Sans KR', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(247,246,243,.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+    .nav-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+    .nav-logo {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text-main);
+      letter-spacing: -.2px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-logo .badge {
+      background: var(--accent);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 99px;
+      letter-spacing: .4px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 13px;
+      color: var(--text-sub);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--text-main); }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 5rem 2rem 3.5rem;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accent-lt);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .6px;
+      padding: 4px 12px;
+      border-radius: 99px;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -.5px;
+      margin-bottom: 1rem;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+    .hero-desc {
+      font-size: 16px;
+      color: var(--text-sub);
+      max-width: 580px;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+    .hero-philosophy {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--amber);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      font-size: 14.5px;
+      color: var(--text-sub);
+      max-width: 580px;
+      line-height: 1.8;
+    }
+    .hero-philosophy strong {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    /* ── OVERVIEW CARDS ── */
+    .overview {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem 4rem;
+    }
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+    }
+    .ov-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.25rem 1rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .ov-icon {
+      font-size: 1.4rem;
+      margin-bottom: .5rem;
+    }
+    .ov-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      margin-bottom: .25rem;
+    }
+    .ov-value {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    /* ── SECTION WRAPPER ── */
+    .sections {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .section-num {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: -.3px;
+      line-height: 1.3;
+    }
+    .section-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+    .card + .card { margin-top: 1rem; }
+
+    .card-header {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+    }
+    .card-tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      padding: 3px 10px;
+      border-radius: 99px;
+    }
+    .card-title {
+      font-weight: 600;
+      font-size: 15px;
+    }
+    .card-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    /* ── INFO ROWS ── */
+    .info-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: .65rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .info-row:last-child { border-bottom: none; }
+    .info-key {
+      flex-shrink: 0;
+      width: 110px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: .4px;
+      padding-top: 2px;
+    }
+    .info-val {
+      font-size: 14px;
+      color: var(--text-main);
+      flex: 1;
+      line-height: 1.65;
+    }
+    .info-val .chip {
+      display: inline-block;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 2px 8px;
+      margin: 2px 3px 2px 0;
+    }
+
+    /* ── CLASS TRACK ── */
+    .track-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    @media (max-width: 600px) { .track-grid { grid-template-columns: 1fr; } }
+    .track-card {
+      border-radius: 10px;
+      padding: 1.25rem;
+      border: 1px solid var(--border);
+    }
+    .track-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      margin-bottom: .5rem;
+    }
+    .track-name {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: .75rem;
+    }
+    .track-items {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: .35rem;
+    }
+    .track-items li {
+      font-size: 13px;
+      color: var(--text-sub);
+      display: flex;
+      align-items: flex-start;
+      gap: .5rem;
+    }
+    .track-items li::before {
+      content: '·';
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ── ASSET CARDS ── */
+    .asset-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    @media (max-width: 600px) { .asset-grid { grid-template-columns: 1fr; } }
+    .asset-card {
+      border-radius: 10px;
+      padding: 1.25rem;
+      border: 1px solid var(--border);
+    }
+    .asset-icon { font-size: 1.5rem; margin-bottom: .5rem; }
+    .asset-name {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: .35rem;
+    }
+    .asset-desc {
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.65;
+    }
+    .asset-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .35rem;
+      margin-top: .75rem;
+    }
+    .asset-tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 5px;
+    }
+
+    /* ── STUDY GROUP ── */
+    .sg-diagram {
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 1.5rem;
+      text-align: center;
+      border: 1px dashed var(--border);
+      margin-bottom: 1rem;
+    }
+    .sg-center {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.3;
+      margin-bottom: .75rem;
+    }
+    .sg-arrow { font-size: 1.2rem; margin: .25rem 0; color: var(--text-muted); }
+    .sg-members {
+      display: flex;
+      justify-content: center;
+      gap: .5rem;
+      flex-wrap: wrap;
+    }
+    .sg-member {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    /* ── TIMELINE (Pre-briefing) ── */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .tl-item {
+      display: flex;
+      gap: 1rem;
+    }
+    .tl-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .tl-dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .tl-line {
+      width: 2px;
+      flex: 1;
+      background: var(--border);
+      margin: 4px 0;
+      min-height: 24px;
+    }
+    .tl-item:last-child .tl-line { display: none; }
+    .tl-content {
+      padding: 4px 0 1.5rem;
+    }
+    .tl-title {
+      font-weight: 600;
+      font-size: 14.5px;
+      margin-bottom: .25rem;
+    }
+    .tl-body {
+      font-size: 13.5px;
+      color: var(--text-sub);
+      line-height: 1.7;
+    }
+
+    /* ── PHILOSOPHY BANNER ── */
+    .philosophy-banner {
+      background: linear-gradient(135deg, #F0F4FF 0%, #FFF7ED 100%);
+      border: 1px solid #D6DDFA;
+      border-radius: var(--radius);
+      padding: 1.75rem 2rem;
+      margin-top: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .philosophy-banner::before {
+      content: '"';
+      position: absolute;
+      top: -10px;
+      left: 16px;
+      font-size: 100px;
+      color: rgba(74,108,247,.1);
+      font-family: Georgia, serif;
+      line-height: 1;
+    }
+    .philosophy-banner .quote {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: .5rem;
+      line-height: 1.5;
+      position: relative;
+    }
+    .philosophy-banner .quote-sub {
+      font-size: 13.5px;
+      color: var(--text-sub);
+      line-height: 1.75;
+      position: relative;
+    }
+
+    /* ── DIVIDER ── */
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2.5rem;
+      font-size: 13px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── COLOR UTILITIES ── */
+    .c-accent  { color: var(--accent); }
+    .c-amber   { color: var(--amber); }
+    .c-green   { color: var(--green); }
+    .c-purple  { color: var(--purple); }
+    .c-rose    { color: var(--rose); }
+
+    .bg-accent-lt  { background: var(--accent-lt); }
+    .bg-amber-lt   { background: var(--amber-lt); }
+    .bg-green-lt   { background: var(--green-lt); }
+    .bg-purple-lt  { background: var(--purple-lt); }
+    .bg-rose-lt    { background: var(--rose-lt); }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">
+      Boosters AI 캠페인
+      <span class="badge">Phase 1</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#tools">툴</a></li>
+      <li><a href="#classes">클래스</a></li>
+      <li><a href="#assets">자산</a></li>
+      <li><a href="#study">스터디</a></li>
+      <li><a href="#prebriefing">사전 브리핑</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<header class="hero">
+  <div class="hero-eyebrow">🚀 AI 침투 제고 캠페인 · Phase 1</div>
+  <h1>AI를 <em>일상의 언어</em>로<br>만드는 여정</h1>
+  <p class="hero-desc">
+    부스터스 구성원 모두가 AI를 두려워하지 않고, 자신의 방식으로 활용할 수 있도록—
+    툴 도입부터 스터디 그룹 운영까지, Phase 1의 실행 계획을 한눈에 정리합니다.
+  </p>
+  <div class="hero-philosophy">
+    <strong>💛 우리가 지향하는 분위기</strong><br>
+    나의 취약성을 드러내도 된다는 안전한 그라운드.<br>
+    모르면 모른다고, 어렵다면 어렵다고 말할 수 있는 문화를 먼저 만듭니다.
+  </div>
+</header>
+
+<!-- ═══════════════ OVERVIEW ═══════════════ -->
+<section class="overview">
+  <div class="overview-grid">
+    <div class="ov-card">
+      <div class="ov-icon">🛠️</div>
+      <div class="ov-label">Section 1</div>
+      <div class="ov-value">툴 도입 &amp; 관리</div>
+    </div>
+    <div class="ov-card">
+      <div class="ov-icon">🎓</div>
+      <div class="ov-label">Section 2</div>
+      <div class="ov-value">역량 클래스</div>
+    </div>
+    <div class="ov-card">
+      <div class="ov-icon">📦</div>
+      <div class="ov-label">Section 3</div>
+      <div class="ov-value">회사 자산 구축</div>
+    </div>
+    <div class="ov-card">
+      <div class="ov-icon">👥</div>
+      <div class="ov-label">Section 4</div>
+      <div class="ov-value">스터디 그룹</div>
+    </div>
+    <div class="ov-card">
+      <div class="ov-icon">📢</div>
+      <div class="ov-label">Section 5</div>
+      <div class="ov-value">사전 브리핑</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ SECTIONS ═══════════════ -->
+<main class="sections">
+
+  <!-- ══ 1. TOOLS ══ -->
+  <section id="tools">
+    <div class="section-header">
+      <div class="section-num bg-accent-lt c-accent">1</div>
+      <div>
+        <div class="section-title">툴 도입 &amp; 관리</div>
+        <div class="section-subtitle">AI 도구 구독 체계와 운영 방식</div>
+      </div>
+    </div>
+
+    <!-- 1-1 Claude Code / Codex -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-tag bg-accent-lt c-accent">1-1</span>
+        <span class="card-title">Claude Code / Codex — 법인 SaaS</span>
+      </div>
+      <div class="card-body">
+        <div class="info-row">
+          <div class="info-key">구독 주체</div>
+          <div class="info-val">boosters.kr 법인 구독 (개인 계정 아님)</div>
+        </div>
+        <div class="info-row">
+          <div class="info-key">담당자</div>
+          <div class="info-val">IT팀 <strong>경민님</strong>이 전체 계정 관리</div>
+        </div>
+        <div class="info-row">
+          <div class="info-key">구독 플랜</div>
+          <div class="info-val">
+            <span class="chip">Pro</span>
+            <span class="chip">Max (고사용자)</span>
+            — 개인별 사용량에 따라 플랜 분기
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-key">사용 추적</div>
+          <div class="info-val">사용량 집계 웹페이지 별도 구축 완료 — 실시간 모니터링 가능</div>
+        </div>
+        <div class="info-row">
+          <div class="info-key">월간 리뷰</div>
+          <div class="info-val">팀 리더가 매월 <strong>생산성 + 성과</strong> 연계하여 사용 현황 검토</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1-2 Other Tools -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-tag bg-accent-lt c-accent">1-2</span>
+        <span class="card-title">기타 AI 툴 — 개별 신청 방식</span>
+      </div>
+      <div class="card-body">
+        <div class="info-row">
+          <div class="info-key">담당자</div>
+          <div class="info-val">피플팀 <strong>은정님</strong>이 취합 및 관리</div>
+        </div>
+        <div class="info-row">
+          <div class="info-key">신청 절차</div>
+          <div class="info-val">개인 신청 → 팀 리더 승인 → 피플팀 처리 (월 단위 정산)</div>
+        </div>
+        <div class="info-row">
+          <div class="info-key">정산 주기</div>
+          <div class="info-val">월별 청구 — 불필요 구독 해지는 월 말일 기준으로 정리</div>
+        </div>
+        <div class="info-row">
+          <div class="info-key">신청 대상</div>
+          <div class="info-val">Claude Code / Codex 외 Perplexity, Midjourney, Gamma 등 업무 목적 AI 툴 전반</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ══ 2. CLASSES ══ -->
+  <section id="classes">
+    <div class="section-header">
+      <div class="section-num bg-amber-lt c-amber">2</div>
+      <div>
+        <div class="section-title">역량 클래스</div>
+        <div class="section-subtitle">사용량 데이터 기반으로 트랙 분기</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-tag bg-amber-lt c-amber">2-1</span>
+        <span class="card-title">클래스 운영 방식</span>
+      </div>
+      <div class="card-body">
+        <div class="info-row">
+          <div class="info-key">분기 기준</div>
+          <div class="info-val">사용량 추적 데이터를 바탕으로 Basic / Advanced 트랙 자동 분기</div>
+        </div>
+
+        <div class="track-grid" style="margin-top: 1rem;">
+          <div class="track-card bg-amber-lt" style="border-color: #FCD34D;">
+            <div class="track-label c-amber">Basic Track</div>
+            <div class="track-name">AI와 첫 만남</div>
+            <ul class="track-items">
+              <li>프롬프트 작성의 원리</li>
+              <li>컴퓨터가 자연어를 읽는 방식</li>
+              <li>Markdown &amp; GitHub 기초</li>
+              <li>업무에 AI 붙여보기 실습</li>
+            </ul>
+          </div>
+          <div class="track-card bg-accent-lt" style="border-color: #A5B4FC;">
+            <div class="track-label c-accent">Advanced Track</div>
+            <div class="track-name">AI로 더 깊이 가기</div>
+            <ul class="track-items">
+              <li>경민님 직접 커리큘럼 설계</li>
+              <li>복잡한 워크플로 자동화</li>
+              <li>SKILL 파일 작성 &amp; 공유</li>
+              <li>팀별 레버리지 프로젝트 설계</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ══ 3. COMPANY ASSETS ══ -->
+  <section id="assets">
+    <div class="section-header">
+      <div class="section-num bg-green-lt c-green">3</div>
+      <div>
+        <div class="section-title">회사 자산 구축</div>
+        <div class="section-subtitle">AI 활용 결과물을 조직의 자산으로 쌓아가기</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <div class="asset-grid">
+          <!-- Playground -->
+          <div class="asset-card bg-green-lt" style="border-color: #6EE7B7;">
+            <div class="asset-icon">🌱</div>
+            <div class="asset-name">3-1 · Playground</div>
+            <div class="asset-desc">
+              바로 적용되지 않아도 괜찮은 아이디어들. 재미로 만든 것도 모두 보관합니다.
+              언젠가 쓸 날이 오거나, 누군가의 영감이 될 수 있으니까요.
+            </div>
+            <div class="asset-tags">
+              <span class="asset-tag bg-green-lt c-green" style="border: 1px solid #6EE7B7;">자유 실험</span>
+              <span class="asset-tag bg-green-lt c-green" style="border: 1px solid #6EE7B7;">미래 가능성 보관</span>
+            </div>
+          </div>
+          <!-- Leverage Projects -->
+          <div class="asset-card bg-purple-lt" style="border-color: #C4B5FD;">
+            <div class="asset-icon">🔗</div>
+            <div class="asset-name">3-2 · Leverage Projects</div>
+            <div class="asset-desc">
+              그룹 프로젝트 산출물을 체계적으로 아카이빙. 다음 사람이 이어받을 수 있도록
+              GitHub + Markdown + SKILL 파일 형태로 정리합니다.
+            </div>
+            <div class="asset-tags">
+              <span class="asset-tag bg-purple-lt c-purple" style="border: 1px solid #C4B5FD;">GitHub</span>
+              <span class="asset-tag bg-purple-lt c-purple" style="border: 1px solid #C4B5FD;">Markdown</span>
+              <span class="asset-tag bg-purple-lt c-purple" style="border: 1px solid #C4B5FD;">SKILL 파일</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 1rem; padding: 1rem 1.25rem; background: var(--bg); border-radius: 10px; border: 1px solid var(--border);">
+          <div style="font-size: 13px; color: var(--text-sub); line-height: 1.7;">
+            💡 <strong style="color: var(--text-main);">자산화의 핵심</strong>은 재사용성입니다. 팀원이 바뀌어도, 시간이 지나도 꺼내 쓸 수 있는 형태로 남깁니다.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ══ 4. STUDY GROUPS ══ -->
+  <section id="study">
+    <div class="section-header">
+      <div class="section-num bg-purple-lt c-purple">4</div>
+      <div>
+        <div class="section-title">스터디 그룹</div>
+        <div class="section-subtitle">팀/부서별 AI 가이드 중심의 소규모 학습 커뮤니티</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-tag bg-purple-lt c-purple">4-1</span>
+        <span class="card-title">그룹 구성 원칙</span>
+      </div>
+      <div class="card-body">
+        <!-- Diagram -->
+        <div class="sg-diagram">
+          <div style="display: flex; justify-content: center; margin-bottom: .5rem;">
+            <div class="sg-center">AI<br>가이드</div>
+          </div>
+          <div class="sg-arrow">↕</div>
+          <div class="sg-members">
+            <div class="sg-member">팀원 1</div>
+            <div class="sg-member">팀원 2</div>
+            <div class="sg-member">팀원 3</div>
+            <div class="sg-member">팀원 4</div>
+            <div class="sg-member">팀원 5</div>
+          </div>
+          <div style="font-size: 12px; color: var(--text-muted); margin-top: .75rem;">부서/팀별 5~6인 소규모 구성</div>
+        </div>
+
+        <div class="info-row">
+          <div class="info-key">그룹 규모</div>
+          <div class="info-val">부서·팀별 <strong>5~6인</strong> 소규모 — 심리적 안전감 확보를 위한 적정 인원</div>
+        </div>
+        <div class="info-row">
+          <div class="info-key">센터 역할</div>
+          <div class="info-val">해당 부서·팀의 AI 가이드가 자연스럽게 리드 — 강제 지정 아님</div>
+        </div>
+        <div class="info-row">
+          <div class="info-key">저사용 부서</div>
+          <div class="info-val">사용량이 낮은 부서는 사전 브리핑 이후에 그룹 구성 방식 결정 (아래 Section 5 참고)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ══ 5. PRE-BRIEFING ══ -->
+  <section id="prebriefing">
+    <div class="section-header">
+      <div class="section-num bg-rose-lt c-rose">5</div>
+      <div>
+        <div class="section-title">사전 브리핑</div>
+        <div class="section-subtitle">6월 중순 리더 브리핑 전 내부 싱크</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <div class="timeline">
+
+          <div class="tl-item">
+            <div class="tl-left">
+              <div class="tl-dot bg-rose-lt c-rose">1</div>
+              <div class="tl-line"></div>
+            </div>
+            <div class="tl-content">
+              <div class="tl-title">내부 팀 싱크</div>
+              <div class="tl-body">
+                6월 중순 리더 브리핑 전, 실행 팀 내부에서 먼저 싱크.
+                방향성과 메시지를 정렬합니다.
+              </div>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-left">
+              <div class="tl-dot bg-rose-lt c-rose">2</div>
+              <div class="tl-line"></div>
+            </div>
+            <div class="tl-content">
+              <div class="tl-title">프로젝트 목적 &amp; 배경 공유</div>
+              <div class="tl-body">
+                왜 지금 AI 캠페인인가 — 조직 내 맥락과 숫자 (역량 진단 결과 포함)를 함께 제시합니다.
+              </div>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-left">
+              <div class="tl-dot bg-rose-lt c-rose">3</div>
+              <div class="tl-line"></div>
+            </div>
+            <div class="tl-content">
+              <div class="tl-title">운영 방식 안내</div>
+              <div class="tl-body">
+                어떻게 진행되는지 — 툴, 클래스, 스터디 그룹, 자산화 흐름을 각 리더에게 미리 설명합니다.
+              </div>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-left">
+              <div class="tl-dot bg-rose-lt c-rose">4</div>
+            </div>
+            <div class="tl-content">
+              <div class="tl-title">6월 중순 공식 브리핑</div>
+              <div class="tl-body">
+                전체 리더 대상 공식 브리핑. 사전 싱크가 완료된 상태이므로 빠르게 정렬 가능합니다.
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="philosophy-banner">
+          <div class="quote">"나의 취약성을 드러내도 된다는 안전한 그라운드"</div>
+          <div class="quote-sub">
+            브리핑에서 강조할 핵심 메시지입니다. AI를 모르는 것이 부끄러운 게 아니라,
+            모른다는 것을 말할 수 없는 문화가 문제입니다. 리더들이 먼저 이 분위기를 만들어가도록 함께 이야기합니다.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  Boosters AI 침투 제고 캠페인 &nbsp;·&nbsp; Phase 1 실행 계획 &nbsp;·&nbsp; 2026
+</footer>
+
+</body>
+</html>
