@@ -43,470 +43,258 @@
 
     /* ── NAV ── */
     nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      position: sticky; top: 0; z-index: 100;
       background: rgba(247,246,243,.92);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border);
       padding: 0 2rem;
     }
     .nav-inner {
-      max-width: 900px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      max-width: 900px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
       height: 56px;
     }
     .nav-logo {
-      font-weight: 700;
-      font-size: 14px;
-      color: var(--text-main);
-      letter-spacing: -.2px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      font-weight: 700; font-size: 14px; color: var(--text-main);
+      letter-spacing: -.2px; display: flex; align-items: center; gap: 8px;
     }
     .nav-logo .badge {
-      background: var(--accent);
-      color: #fff;
-      font-size: 10px;
-      font-weight: 600;
-      padding: 2px 8px;
-      border-radius: 99px;
-      letter-spacing: .4px;
+      background: var(--accent); color: #fff;
+      font-size: 10px; font-weight: 600;
+      padding: 2px 8px; border-radius: 99px; letter-spacing: .4px;
     }
-    .nav-links {
-      display: flex;
-      gap: 1.5rem;
-      list-style: none;
-    }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
     .nav-links a {
-      font-size: 13px;
-      color: var(--text-sub);
-      text-decoration: none;
-      font-weight: 500;
-      transition: color .2s;
+      font-size: 13px; color: var(--text-sub); text-decoration: none;
+      font-weight: 500; transition: color .2s;
     }
     .nav-links a:hover { color: var(--text-main); }
 
     /* ── HERO ── */
-    .hero {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 5rem 2rem 3.5rem;
-    }
+    .hero { max-width: 900px; margin: 0 auto; padding: 5rem 2rem 3.5rem; }
     .hero-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--accent-lt);
-      color: var(--accent);
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: .6px;
-      padding: 4px 12px;
-      border-radius: 99px;
-      text-transform: uppercase;
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--accent-lt); color: var(--accent);
+      font-size: 12px; font-weight: 600; letter-spacing: .6px;
+      padding: 4px 12px; border-radius: 99px; text-transform: uppercase;
       margin-bottom: 1.25rem;
     }
     .hero h1 {
-      font-size: clamp(2rem, 5vw, 2.8rem);
-      font-weight: 700;
-      line-height: 1.25;
-      letter-spacing: -.5px;
-      margin-bottom: 1rem;
+      font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 700;
+      line-height: 1.25; letter-spacing: -.5px; margin-bottom: 1rem;
     }
-    .hero h1 em {
-      font-style: normal;
-      color: var(--accent);
-    }
+    .hero h1 em { font-style: normal; color: var(--accent); }
     .hero-desc {
-      font-size: 16px;
-      color: var(--text-sub);
-      max-width: 580px;
-      line-height: 1.8;
-      margin-bottom: 2.5rem;
+      font-size: 16px; color: var(--text-sub); max-width: 580px;
+      line-height: 1.8; margin-bottom: 2.5rem;
     }
     .hero-philosophy {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-left: 4px solid var(--amber);
-      border-radius: var(--radius);
-      padding: 1.25rem 1.5rem;
-      font-size: 14.5px;
-      color: var(--text-sub);
-      max-width: 580px;
-      line-height: 1.8;
+      background: var(--surface); border: 1px solid var(--border);
+      border-left: 4px solid var(--amber); border-radius: var(--radius);
+      padding: 1.25rem 1.5rem; font-size: 14.5px; color: var(--text-sub);
+      max-width: 580px; line-height: 1.8;
     }
-    .hero-philosophy strong {
-      color: var(--text-main);
-      font-weight: 600;
-    }
+    .hero-philosophy strong { color: var(--text-main); font-weight: 600; }
 
     /* ── OVERVIEW CARDS ── */
-    .overview {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 2rem 4rem;
-    }
+    .overview { max-width: 900px; margin: 0 auto; padding: 0 2rem 4rem; }
     .overview-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 1rem;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem;
     }
     .ov-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.25rem 1.25rem 1rem;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.25rem 1.25rem 1rem;
       box-shadow: var(--shadow-sm);
     }
-    .ov-icon {
-      font-size: 1.4rem;
-      margin-bottom: .5rem;
-    }
+    .ov-icon { font-size: 1.4rem; margin-bottom: .5rem; }
     .ov-label {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: .5px;
-      margin-bottom: .25rem;
+      font-size: 11px; font-weight: 600; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: .5px; margin-bottom: .25rem;
     }
-    .ov-value {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-main);
-    }
+    .ov-value { font-size: 14px; font-weight: 600; color: var(--text-main); }
 
     /* ── SECTION WRAPPER ── */
     .sections {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 2rem 6rem;
-      display: flex;
-      flex-direction: column;
-      gap: 3rem;
+      max-width: 900px; margin: 0 auto; padding: 0 2rem 6rem;
+      display: flex; flex-direction: column; gap: 3rem;
     }
 
     /* ── SECTION HEADER ── */
-    .section-header {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      margin-bottom: 1.25rem;
-    }
+    .section-header { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.25rem; }
     .section-num {
-      flex-shrink: 0;
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      font-weight: 700;
-      margin-top: 2px;
+      flex-shrink: 0; width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; margin-top: 2px;
     }
-    .section-title {
-      font-size: 1.3rem;
-      font-weight: 700;
-      letter-spacing: -.3px;
-      line-height: 1.3;
-    }
-    .section-subtitle {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
+    .section-title { font-size: 1.3rem; font-weight: 700; letter-spacing: -.3px; line-height: 1.3; }
+    .section-subtitle { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
 
     /* ── CARD ── */
     .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow-sm);
-      overflow: hidden;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); box-shadow: var(--shadow-sm); overflow: hidden;
     }
     .card + .card { margin-top: 1rem; }
-
     .card-header {
-      padding: 1rem 1.5rem;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      gap: .75rem;
+      padding: 1rem 1.5rem; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: .75rem;
     }
     .card-tag {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: .5px;
-      padding: 3px 10px;
-      border-radius: 99px;
+      font-size: 11px; font-weight: 700; letter-spacing: .5px;
+      padding: 3px 10px; border-radius: 99px;
     }
-    .card-title {
-      font-weight: 600;
-      font-size: 15px;
-    }
-    .card-body {
-      padding: 1.25rem 1.5rem;
-    }
+    .card-title { font-weight: 600; font-size: 15px; }
+    .card-body { padding: 1.25rem 1.5rem; }
 
     /* ── INFO ROWS ── */
     .info-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      padding: .65rem 0;
-      border-bottom: 1px solid var(--border);
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: .65rem 0; border-bottom: 1px solid var(--border);
     }
     .info-row:last-child { border-bottom: none; }
     .info-key {
-      flex-shrink: 0;
-      width: 110px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: .4px;
-      padding-top: 2px;
+      flex-shrink: 0; width: 110px; font-size: 12px; font-weight: 600;
+      color: var(--text-muted); text-transform: uppercase; letter-spacing: .4px; padding-top: 2px;
     }
-    .info-val {
-      font-size: 14px;
-      color: var(--text-main);
-      flex: 1;
-      line-height: 1.65;
-    }
+    .info-val { font-size: 14px; color: var(--text-main); flex: 1; line-height: 1.65; }
     .info-val .chip {
-      display: inline-block;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: 500;
-      padding: 2px 8px;
-      margin: 2px 3px 2px 0;
+      display: inline-block; background: var(--bg); border: 1px solid var(--border);
+      border-radius: 6px; font-size: 12px; font-weight: 500;
+      padding: 2px 8px; margin: 2px 3px 2px 0;
+    }
+
+    /* ── FLOW (신청 절차) ── */
+    .flow {
+      display: flex; flex-wrap: wrap; align-items: center;
+      gap: .35rem; margin-top: .25rem;
+    }
+    .flow-step {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 6px; padding: 3px 10px;
+      font-size: 12.5px; font-weight: 500; white-space: nowrap;
+    }
+    .flow-arrow { color: var(--text-muted); font-size: 13px; }
+
+    /* ── WARNING NOTICE ── */
+    .notice {
+      display: flex; gap: .6rem; align-items: flex-start;
+      background: #FFF7ED; border: 1px solid #FCD34D;
+      border-radius: 8px; padding: .75rem 1rem;
+      margin-top: .5rem; font-size: 13px; color: #92400E; line-height: 1.6;
+    }
+    .notice-icon { flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+    /* ── NOTE ── */
+    .note {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: .75rem 1rem;
+      font-size: 13px; color: var(--text-sub); line-height: 1.6; margin-top: .5rem;
     }
 
     /* ── CLASS TRACK ── */
-    .track-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-    @media (max-width: 600px) { .track-grid { grid-template-columns: 1fr; } }
     .track-card {
-      border-radius: 10px;
-      padding: 1.25rem;
-      border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.25rem; border: 1px solid var(--border);
     }
     .track-label {
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .5px;
-      margin-bottom: .5rem;
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .5px; margin-bottom: .5rem;
     }
-    .track-name {
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: .75rem;
-    }
-    .track-items {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: .35rem;
-    }
+    .track-name { font-size: 16px; font-weight: 700; margin-bottom: .75rem; }
+    .track-items { list-style: none; display: flex; flex-direction: column; gap: .35rem; }
     .track-items li {
-      font-size: 13px;
-      color: var(--text-sub);
-      display: flex;
-      align-items: flex-start;
-      gap: .5rem;
+      font-size: 13px; color: var(--text-sub);
+      display: flex; align-items: flex-start; gap: .5rem;
     }
-    .track-items li::before {
-      content: '·';
-      font-weight: 700;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
+    .track-items li::before { content: '·'; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
 
     /* ── ASSET CARDS ── */
     .asset-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
     }
     @media (max-width: 600px) { .asset-grid { grid-template-columns: 1fr; } }
-    .asset-card {
-      border-radius: 10px;
-      padding: 1.25rem;
-      border: 1px solid var(--border);
-    }
+    .asset-card { border-radius: 10px; padding: 1.25rem; border: 1px solid var(--border); }
     .asset-icon { font-size: 1.5rem; margin-bottom: .5rem; }
-    .asset-name {
-      font-size: 14px;
-      font-weight: 700;
-      margin-bottom: .35rem;
-    }
-    .asset-desc {
-      font-size: 13px;
-      color: var(--text-sub);
-      line-height: 1.65;
-    }
-    .asset-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .35rem;
-      margin-top: .75rem;
-    }
-    .asset-tag {
-      font-size: 11px;
-      font-weight: 600;
-      padding: 2px 8px;
-      border-radius: 5px;
-    }
+    .asset-name { font-size: 14px; font-weight: 700; margin-bottom: .35rem; }
+    .asset-desc { font-size: 13px; color: var(--text-sub); line-height: 1.65; }
+    .asset-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .75rem; }
+    .asset-tag { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 5px; }
 
-    /* ── STUDY GROUP ── */
+    /* ── COMMUNITY DIAGRAM ── */
     .sg-diagram {
-      background: var(--bg);
-      border-radius: 10px;
-      padding: 1.5rem;
-      text-align: center;
-      border: 1px dashed var(--border);
-      margin-bottom: 1rem;
+      background: var(--bg); border-radius: 10px; padding: 1.5rem;
+      text-align: center; border: 1px dashed var(--border); margin-bottom: 1rem;
     }
     .sg-center {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: var(--accent);
-      color: #fff;
-      font-size: 12px;
-      font-weight: 700;
-      text-align: center;
-      line-height: 1.3;
-      margin-bottom: .75rem;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 88px; height: 88px; border-radius: 50%;
+      background: var(--accent); color: #fff;
+      font-size: 12px; font-weight: 700; text-align: center;
+      line-height: 1.35; margin-bottom: .75rem;
     }
     .sg-arrow { font-size: 1.2rem; margin: .25rem 0; color: var(--text-muted); }
-    .sg-members {
-      display: flex;
-      justify-content: center;
-      gap: .5rem;
-      flex-wrap: wrap;
-    }
+    .sg-members { display: flex; justify-content: center; gap: .5rem; flex-wrap: wrap; }
     .sg-member {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 4px 12px;
-      font-size: 12px;
-      font-weight: 500;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: 4px 12px; font-size: 12px; font-weight: 500;
     }
 
-    /* ── TIMELINE (Pre-briefing) ── */
-    .timeline {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
+    /* ── SCHEDULE TABLE ── */
+    .sched-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    .sched-table th {
+      text-align: left; font-size: 11px; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: .5px;
+      padding: .6rem 1rem; background: var(--bg); border-bottom: 2px solid var(--border);
     }
-    .tl-item {
-      display: flex;
-      gap: 1rem;
+    .sched-table td {
+      padding: .85rem 1rem; border-bottom: 1px solid var(--border);
+      vertical-align: top; line-height: 1.6;
     }
-    .tl-left {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      flex-shrink: 0;
+    .sched-table tr:last-child td { border-bottom: none; }
+    .sched-date {
+      white-space: nowrap; font-weight: 700; color: var(--text-main);
+      width: 130px;
     }
-    .tl-dot {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: 700;
-      flex-shrink: 0;
+    .sched-event { color: var(--text-main); }
+    .sched-detail {
+      font-size: 12.5px; color: var(--text-sub); margin-top: .2rem; line-height: 1.55;
     }
-    .tl-line {
-      width: 2px;
-      flex: 1;
-      background: var(--border);
-      margin: 4px 0;
-      min-height: 24px;
+    .sched-dot {
+      display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+      margin-right: 6px; vertical-align: middle; flex-shrink: 0;
     }
-    .tl-item:last-child .tl-line { display: none; }
-    .tl-content {
-      padding: 4px 0 1.5rem;
-    }
-    .tl-title {
-      font-weight: 600;
-      font-size: 14.5px;
-      margin-bottom: .25rem;
-    }
-    .tl-body {
-      font-size: 13.5px;
-      color: var(--text-sub);
-      line-height: 1.7;
+    .milestone {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 11px; font-weight: 700; padding: 2px 8px;
+      border-radius: 99px; letter-spacing: .3px;
     }
 
     /* ── PHILOSOPHY BANNER ── */
     .philosophy-banner {
       background: linear-gradient(135deg, #F0F4FF 0%, #FFF7ED 100%);
-      border: 1px solid #D6DDFA;
-      border-radius: var(--radius);
-      padding: 1.75rem 2rem;
-      margin-top: 1rem;
-      position: relative;
-      overflow: hidden;
+      border: 1px solid #D6DDFA; border-radius: var(--radius);
+      padding: 1.75rem 2rem; margin-top: 1rem;
+      position: relative; overflow: hidden;
     }
     .philosophy-banner::before {
-      content: '"';
-      position: absolute;
-      top: -10px;
-      left: 16px;
-      font-size: 100px;
-      color: rgba(74,108,247,.1);
-      font-family: Georgia, serif;
-      line-height: 1;
+      content: '"'; position: absolute; top: -10px; left: 16px;
+      font-size: 100px; color: rgba(74,108,247,.1);
+      font-family: Georgia, serif; line-height: 1;
     }
     .philosophy-banner .quote {
-      font-size: 17px;
-      font-weight: 700;
-      color: var(--text-main);
-      margin-bottom: .5rem;
-      line-height: 1.5;
-      position: relative;
+      font-size: 17px; font-weight: 700; color: var(--text-main);
+      margin-bottom: .5rem; line-height: 1.5; position: relative;
     }
     .philosophy-banner .quote-sub {
-      font-size: 13.5px;
-      color: var(--text-sub);
-      line-height: 1.75;
-      position: relative;
+      font-size: 13.5px; color: var(--text-sub); line-height: 1.75; position: relative;
     }
 
     /* ── DIVIDER ── */
-    .section-divider {
-      border: none;
-      border-top: 1px solid var(--border);
-    }
+    .section-divider { border: none; border-top: 1px solid var(--border); }
 
     /* ── FOOTER ── */
     footer {
-      text-align: center;
-      padding: 2.5rem;
-      font-size: 13px;
-      color: var(--text-muted);
-      border-top: 1px solid var(--border);
+      text-align: center; padding: 2.5rem;
+      font-size: 13px; color: var(--text-muted); border-top: 1px solid var(--border);
     }
 
     /* ── COLOR UTILITIES ── */
@@ -529,26 +317,33 @@
 <nav>
   <div class="nav-inner">
     <div class="nav-logo">
-      Boosters AI 캠페인
+      Boosters AX 전환 캠페인
       <span class="badge">Phase 1</span>
     </div>
     <ul class="nav-links">
       <li><a href="#tools">툴</a></li>
       <li><a href="#classes">클래스</a></li>
       <li><a href="#assets">자산</a></li>
-      <li><a href="#study">스터디</a></li>
-      <li><a href="#prebriefing">사전 브리핑</a></li>
+      <li><a href="#community">커뮤니티</a></li>
+      <li><a href="#prebriefing">스케줄</a></li>
     </ul>
   </div>
 </nav>
 
 <!-- ═══════════════ HERO ═══════════════ -->
 <header class="hero">
-  <div class="hero-eyebrow">🚀 AI 침투 제고 캠페인 · Phase 1</div>
+  <div class="hero-eyebrow">🚀 커뮤니티 만들기</div>
   <h1>AI를 <em>일상의 언어</em>로<br>만드는 여정</h1>
   <p class="hero-desc">
-    부스터스 구성원 모두가 AI를 두려워하지 않고, 자신의 방식으로 활용할 수 있도록—
-    툴 도입부터 스터디 그룹 운영까지, Phase 1의 실행 계획을 한눈에 정리합니다.
+    우리는 AI와 함께 일하며 업무 효율을 높이고, 빈 공간을 무한한 상상력으로 채우고자 합니다.
+    크루분들이 정말 잘 쓰기를 바라는 마음에 한 달여 기간 동안 세심하게 들여다보며 준비했습니다.
+  </p>
+  <p class="hero-desc" style="margin-top: -.5rem;">
+    기본적인 지원과 교육 위에, 커뮤니티 리드를 중심으로 자발적으로 스터디하고 성장할 수 있는 환경을 만들었습니다.
+    내가 모르는 것은 스스럼없이 물어보고, 어려워도 포기 않고 서로 도울 수 있는 커뮤니티 — 같이 만들어가요. 🍀
+  </p>
+  <p style="font-size: 12px; color: var(--text-muted); max-width: 580px; margin-bottom: 2.5rem; margin-top: -.75rem; line-height: 1.6;">
+    * 이 문서는 140여 명의 크루들을 가장 잘 도와줄 수 있는 방법을 찾기 위해 총 14명의 커뮤니티 리드 대상자를 인터뷰한 결과를 토대로 작성됐습니다.
   </p>
   <div class="hero-philosophy">
     <strong>💛 우리가 지향하는 분위기</strong><br>
@@ -568,7 +363,7 @@
     <div class="ov-card">
       <div class="ov-icon">🎓</div>
       <div class="ov-label">Section 2</div>
-      <div class="ov-value">역량 클래스</div>
+      <div class="ov-value">AI 기초 클래스</div>
     </div>
     <div class="ov-card">
       <div class="ov-icon">📦</div>
@@ -578,12 +373,12 @@
     <div class="ov-card">
       <div class="ov-icon">👥</div>
       <div class="ov-label">Section 4</div>
-      <div class="ov-value">스터디 그룹</div>
+      <div class="ov-value">커뮤니티 구성</div>
     </div>
     <div class="ov-card">
       <div class="ov-icon">📢</div>
       <div class="ov-label">Section 5</div>
-      <div class="ov-value">사전 브리핑</div>
+      <div class="ov-value">스케줄</div>
     </div>
   </div>
 </section>
@@ -605,16 +400,28 @@
     <div class="card">
       <div class="card-header">
         <span class="card-tag bg-accent-lt c-accent">1-1</span>
-        <span class="card-title">Claude Code / Codex — 법인 SaaS</span>
+        <span class="card-title">Claude Code / ChatGPT Codex — 법인 구독</span>
       </div>
       <div class="card-body">
         <div class="info-row">
-          <div class="info-key">구독 주체</div>
-          <div class="info-val">boosters.kr 법인 구독 (개인 계정 아님)</div>
+          <div class="info-key">신청 방법</div>
+          <div class="info-val">
+            <div class="flow">
+              <span class="flow-step">매월 마지막 주</span>
+              <span class="flow-arrow">→</span>
+              <span class="flow-step">커뮤니티 리드가 구성원 명단 취합</span>
+              <span class="flow-arrow">→</span>
+              <span class="flow-step">피플팀 제출</span>
+              <span class="flow-arrow">→</span>
+              <span class="flow-step">IT서비스실 경민님 전달</span>
+              <span class="flow-arrow">→</span>
+              <span class="flow-step">매월 1일 구독 갱신</span>
+            </div>
+          </div>
         </div>
         <div class="info-row">
-          <div class="info-key">담당자</div>
-          <div class="info-val">IT팀 <strong>경민님</strong>이 전체 계정 관리</div>
+          <div class="info-key">관리 담당자</div>
+          <div class="info-val">IT서비스실 <strong>경민님</strong>이 전체 계정 관리</div>
         </div>
         <div class="info-row">
           <div class="info-key">구독 플랜</div>
@@ -625,38 +432,50 @@
           </div>
         </div>
         <div class="info-row">
-          <div class="info-key">사용 추적</div>
-          <div class="info-val">사용량 집계 웹페이지 별도 구축 완료 — 실시간 모니터링 가능</div>
-        </div>
-        <div class="info-row">
-          <div class="info-key">월간 리뷰</div>
-          <div class="info-val">팀 리더가 매월 <strong>생산성 + 성과</strong> 연계하여 사용 현황 검토</div>
+          <div class="info-key">구독 관리</div>
+          <div class="info-val">
+            매월 사용량 집계 <span style="color:var(--text-muted); font-size:12px;">(IT서비스실)</span> +
+            프로젝트 성과 기여도 <span style="color:var(--text-muted); font-size:12px;">(커뮤니티 리드)</span> 맵핑
+            <div class="note" style="margin-top:.5rem;">
+              💡 사용량 ↔ 성과 맵핑을 위한 <strong>전용 툴</strong>이 필요할 것으로 보임 — 추후 검토 예정
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- 1-2 Other Tools -->
+    <!-- 1-2 기타 AI 툴 -->
     <div class="card">
       <div class="card-header">
         <span class="card-tag bg-accent-lt c-accent">1-2</span>
-        <span class="card-title">기타 AI 툴 — 개별 신청 방식</span>
+        <span class="card-title">기타 AI 툴 — 각 커뮤니티별 신청</span>
       </div>
       <div class="card-body">
         <div class="info-row">
-          <div class="info-key">담당자</div>
-          <div class="info-val">피플팀 <strong>은정님</strong>이 취합 및 관리</div>
+          <div class="info-key">신청 방법</div>
+          <div class="info-val">
+            <div class="flow">
+              <span class="flow-step">커뮤니티 리드가 신청서 작성<br><span style="font-size:11px;color:var(--text-muted);">(크루원 명단 포함)</span></span>
+              <span class="flow-arrow">→</span>
+              <span class="flow-step">플렉스 워크플로우로 피플팀 제출</span>
+              <span class="flow-arrow">→</span>
+              <span class="flow-step">피플팀 승인</span>
+              <span class="flow-arrow">→</span>
+              <span class="flow-step">개별 법인카드로 결제</span>
+            </div>
+            <div class="notice">
+              <span class="notice-icon">⚠️</span>
+              <span><strong>자동 결제 갱신 토글을 반드시 꺼야 합니다.</strong> 신청 문서 상신 시 토글이 꺼진 결제 화면을 첨부 이미지로 필첨.</span>
+            </div>
+          </div>
         </div>
         <div class="info-row">
-          <div class="info-key">신청 절차</div>
-          <div class="info-val">개인 신청 → 팀 리더 승인 → 피플팀 처리 (월 단위 정산)</div>
+          <div class="info-key">관리 담당자</div>
+          <div class="info-val">피플팀 <strong>은정님</strong></div>
         </div>
         <div class="info-row">
-          <div class="info-key">정산 주기</div>
-          <div class="info-val">월별 청구 — 불필요 구독 해지는 월 말일 기준으로 정리</div>
-        </div>
-        <div class="info-row">
-          <div class="info-key">신청 대상</div>
-          <div class="info-val">Claude Code / Codex 외 Perplexity, Midjourney, Gamma 등 업무 목적 AI 툴 전반</div>
+          <div class="info-key">구독 관리</div>
+          <div class="info-val">피플팀 은정님이 커뮤니티 리드에게 주기별로 사용 여부 확인</div>
         </div>
       </div>
     </div>
@@ -669,8 +488,8 @@
     <div class="section-header">
       <div class="section-num bg-amber-lt c-amber">2</div>
       <div>
-        <div class="section-title">역량 클래스</div>
-        <div class="section-subtitle">사용량 데이터 기반으로 트랙 분기</div>
+        <div class="section-title">AI 기초 클래스</div>
+        <div class="section-subtitle">전 구성원 대상 기초 역량 강화</div>
       </div>
     </div>
 
@@ -680,32 +499,15 @@
         <span class="card-title">클래스 운영 방식</span>
       </div>
       <div class="card-body">
-        <div class="info-row">
-          <div class="info-key">분기 기준</div>
-          <div class="info-val">사용량 추적 데이터를 바탕으로 Basic / Advanced 트랙 자동 분기</div>
-        </div>
-
-        <div class="track-grid" style="margin-top: 1rem;">
-          <div class="track-card bg-amber-lt" style="border-color: #FCD34D;">
-            <div class="track-label c-amber">Basic Track</div>
-            <div class="track-name">AI와 첫 만남</div>
-            <ul class="track-items">
-              <li>프롬프트 작성의 원리</li>
-              <li>컴퓨터가 자연어를 읽는 방식</li>
-              <li>Markdown &amp; GitHub 기초</li>
-              <li>업무에 AI 붙여보기 실습</li>
-            </ul>
-          </div>
-          <div class="track-card bg-accent-lt" style="border-color: #A5B4FC;">
-            <div class="track-label c-accent">Advanced Track</div>
-            <div class="track-name">AI로 더 깊이 가기</div>
-            <ul class="track-items">
-              <li>경민님 직접 커리큘럼 설계</li>
-              <li>복잡한 워크플로 자동화</li>
-              <li>SKILL 파일 작성 &amp; 공유</li>
-              <li>팀별 레버리지 프로젝트 설계</li>
-            </ul>
-          </div>
+        <div class="track-card bg-amber-lt" style="border-color: #FCD34D;">
+          <div class="track-label c-amber">기초 강의</div>
+          <div class="track-name">클래스 818</div>
+          <ul class="track-items">
+            <li>프롬프트 작성의 원리</li>
+            <li>컴퓨터가 자연어를 읽는 방식</li>
+            <li>Markdown &amp; GitHub 기초</li>
+            <li>업무에 AI 붙여보기 실습</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -726,7 +528,6 @@
     <div class="card">
       <div class="card-body">
         <div class="asset-grid">
-          <!-- Playground -->
           <div class="asset-card bg-green-lt" style="border-color: #6EE7B7;">
             <div class="asset-icon">🌱</div>
             <div class="asset-name">3-1 · Playground</div>
@@ -739,7 +540,6 @@
               <span class="asset-tag bg-green-lt c-green" style="border: 1px solid #6EE7B7;">미래 가능성 보관</span>
             </div>
           </div>
-          <!-- Leverage Projects -->
           <div class="asset-card bg-purple-lt" style="border-color: #C4B5FD;">
             <div class="asset-icon">🔗</div>
             <div class="asset-name">3-2 · Leverage Projects</div>
@@ -754,7 +554,6 @@
             </div>
           </div>
         </div>
-
         <div style="margin-top: 1rem; padding: 1rem 1.25rem; background: var(--bg); border-radius: 10px; border: 1px solid var(--border);">
           <div style="font-size: 13px; color: var(--text-sub); line-height: 1.7;">
             💡 <strong style="color: var(--text-main);">자산화의 핵심</strong>은 재사용성입니다. 팀원이 바뀌어도, 시간이 지나도 꺼내 쓸 수 있는 형태로 남깁니다.
@@ -766,49 +565,81 @@
 
   <hr class="section-divider" />
 
-  <!-- ══ 4. STUDY GROUPS ══ -->
-  <section id="study">
+  <!-- ══ 4. COMMUNITY ══ -->
+  <section id="community">
     <div class="section-header">
       <div class="section-num bg-purple-lt c-purple">4</div>
       <div>
-        <div class="section-title">스터디 그룹</div>
-        <div class="section-subtitle">팀/부서별 AI 가이드 중심의 소규모 학습 커뮤니티</div>
+        <div class="section-title">커뮤니티 구성</div>
+        <div class="section-subtitle">팀/부서별 AI 커뮤니티 리드 중심의 소규모 학습 커뮤니티</div>
       </div>
     </div>
 
+    <!-- 4-1 -->
     <div class="card">
       <div class="card-header">
         <span class="card-tag bg-purple-lt c-purple">4-1</span>
-        <span class="card-title">그룹 구성 원칙</span>
+        <span class="card-title">커뮤니티 구성 원칙</span>
       </div>
       <div class="card-body">
-        <!-- Diagram -->
         <div class="sg-diagram">
           <div style="display: flex; justify-content: center; margin-bottom: .5rem;">
-            <div class="sg-center">AI<br>가이드</div>
+            <div class="sg-center">AI<br>커뮤니티 리드</div>
           </div>
           <div class="sg-arrow">↕</div>
           <div class="sg-members">
-            <div class="sg-member">팀원 1</div>
-            <div class="sg-member">팀원 2</div>
-            <div class="sg-member">팀원 3</div>
-            <div class="sg-member">팀원 4</div>
-            <div class="sg-member">팀원 5</div>
+            <div class="sg-member">크루원 1</div>
+            <div class="sg-member">크루원 2</div>
+            <div class="sg-member">크루원 3</div>
+            <div class="sg-member">크루원 4</div>
+            <div class="sg-member">크루원 5</div>
+            <div class="sg-member">+ 더</div>
           </div>
-          <div style="font-size: 12px; color: var(--text-muted); margin-top: .75rem;">부서/팀별 5~6인 소규모 구성</div>
+          <div style="font-size: 12px; color: var(--text-muted); margin-top: .75rem;">부서/팀별 10인 이하 소규모 구성</div>
         </div>
 
         <div class="info-row">
           <div class="info-key">그룹 규모</div>
-          <div class="info-val">부서·팀별 <strong>5~6인</strong> 소규모 — 심리적 안전감 확보를 위한 적정 인원</div>
+          <div class="info-val">부서·팀별 <strong>10인 이하</strong> 소규모 — 심리적 안전감 확보를 위한 적정 인원</div>
         </div>
         <div class="info-row">
-          <div class="info-key">센터 역할</div>
-          <div class="info-val">해당 부서·팀의 AI 가이드가 자연스럽게 리드 — 강제 지정 아님</div>
+          <div class="info-key">리드 역할</div>
+          <div class="info-val">해당 부서·팀의 AI 커뮤니티 리드가 자연스럽게 이끌어 나감 — 강제 지정 아님</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4-2 (신설) -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-tag bg-purple-lt c-purple">4-2</span>
+        <span class="card-title">자발적인 클래스 818 — 심화반</span>
+      </div>
+      <div class="card-body">
+        <div class="info-row">
+          <div class="info-key">구성 방식</div>
+          <div class="info-val">심화반 AI 클래스는 자발적으로 구성됩니다. 누구든 원하면 신청할 수 있습니다.</div>
         </div>
         <div class="info-row">
-          <div class="info-key">저사용 부서</div>
-          <div class="info-val">사용량이 낮은 부서는 사전 브리핑 이후에 그룹 구성 방식 결정 (아래 Section 5 참고)</div>
+          <div class="info-key">신청 절차</div>
+          <div class="info-val">
+            <div class="flow">
+              <span class="flow-step">클래스 818 운영 지침에 따라 신청</span>
+              <span class="flow-arrow">→</span>
+              <span class="flow-step">피플팀 승인</span>
+              <span class="flow-arrow">→</span>
+              <span class="flow-step">지원 진행</span>
+            </div>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-key">의무 사항</div>
+          <div class="info-val">
+            심화반 활동 산출물은 반드시 <strong>3번 Leverage Projects 웹사이트</strong>에 아카이빙해야 합니다.
+            <div class="note" style="margin-top:.5rem;">
+              📦 아카이빙 형식: GitHub + Markdown + SKILL 파일 — 다음 사람이 이어받을 수 있도록
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -821,76 +652,96 @@
     <div class="section-header">
       <div class="section-num bg-rose-lt c-rose">5</div>
       <div>
-        <div class="section-title">사전 브리핑</div>
-        <div class="section-subtitle">6월 중순 리더 브리핑 전 내부 싱크</div>
+        <div class="section-title">스케줄</div>
+        <div class="section-subtitle">부스팅데이 발표 전 단계별 공유 및 실행 일정</div>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-body">
-        <div class="timeline">
+      <div class="card-body" style="padding: 0;">
+        <table class="sched-table">
+          <thead>
+            <tr>
+              <th>일정</th>
+              <th>내용</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="sched-date">
+                <span class="milestone" style="background:#EEF1FE; color:#4A6CF7;">5월 28일</span>
+              </td>
+              <td>
+                <div class="sched-event">IT서비스실 Sync 회의</div>
+                <div class="sched-detail">Claude Code / Codex 구독 운영 방식, 사용량 집계 체계 협의</div>
+              </td>
+            </tr>
+            <tr>
+              <td class="sched-date">
+                <span class="milestone" style="background:#EEF1FE; color:#4A6CF7;">6월 4일</span>
+              </td>
+              <td>
+                <div class="sched-event">CEO 내부 공유</div>
+                <div class="sched-detail">캠페인 목적, 배경, Phase 1 전체 계획 보고</div>
+              </td>
+            </tr>
+            <tr>
+              <td class="sched-date">
+                <span class="milestone" style="background:#FEF3C7; color:#D97706;">6월 11~19일</span>
+              </td>
+              <td>
+                <div class="sched-event">커뮤니티 리드 대상 사전 설명회</div>
+                <div class="sched-detail">
+                  각 팀/부서의 AI 커뮤니티 리드에게 캠페인 운영 방식 사전 안내.<br>
+                  툴 신청 절차, 클래스 818, Leverage Projects 아카이빙 방법 포함.
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="sched-date">
+                <span class="milestone" style="background:#D1FAE5; color:#059669;">6월 25일</span>
+              </td>
+              <td>
+                <div class="sched-event">🎉 부스팅데이 발표</div>
+                <div class="sched-detail">전 구성원 대상 AI 침투 제고 캠페인 공식 발표</div>
+              </td>
+            </tr>
+            <tr>
+              <td class="sched-date">
+                <span class="milestone" style="background:#EDE9FE; color:#7C3AED;">6월 25~30일</span>
+              </td>
+              <td>
+                <div class="sched-event">Claude Code / Codex 구독 신청</div>
+                <div class="sched-detail">
+                  <div class="flow" style="margin-top:.25rem;">
+                    <span class="flow-step">커뮤니티 리드 신청 취합</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-step">피플팀 취합</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-step">6월 30일 경민님에 일괄 전달</span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="sched-date">
+                <span class="milestone" style="background:#D1FAE5; color:#059669;">7월 1일</span>
+              </td>
+              <td>
+                <div class="sched-event">🚀 구독 시행 &amp; 아카이빙 페이지 론칭</div>
+                <div class="sched-detail">Claude Code / Codex 구독 시작 + Leverage Projects 아카이빙 웹사이트 오픈</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-          <div class="tl-item">
-            <div class="tl-left">
-              <div class="tl-dot bg-rose-lt c-rose">1</div>
-              <div class="tl-line"></div>
-            </div>
-            <div class="tl-content">
-              <div class="tl-title">내부 팀 싱크</div>
-              <div class="tl-body">
-                6월 중순 리더 브리핑 전, 실행 팀 내부에서 먼저 싱크.
-                방향성과 메시지를 정렬합니다.
-              </div>
-            </div>
-          </div>
-
-          <div class="tl-item">
-            <div class="tl-left">
-              <div class="tl-dot bg-rose-lt c-rose">2</div>
-              <div class="tl-line"></div>
-            </div>
-            <div class="tl-content">
-              <div class="tl-title">프로젝트 목적 &amp; 배경 공유</div>
-              <div class="tl-body">
-                왜 지금 AI 캠페인인가 — 조직 내 맥락과 숫자 (역량 진단 결과 포함)를 함께 제시합니다.
-              </div>
-            </div>
-          </div>
-
-          <div class="tl-item">
-            <div class="tl-left">
-              <div class="tl-dot bg-rose-lt c-rose">3</div>
-              <div class="tl-line"></div>
-            </div>
-            <div class="tl-content">
-              <div class="tl-title">운영 방식 안내</div>
-              <div class="tl-body">
-                어떻게 진행되는지 — 툴, 클래스, 스터디 그룹, 자산화 흐름을 각 리더에게 미리 설명합니다.
-              </div>
-            </div>
-          </div>
-
-          <div class="tl-item">
-            <div class="tl-left">
-              <div class="tl-dot bg-rose-lt c-rose">4</div>
-            </div>
-            <div class="tl-content">
-              <div class="tl-title">6월 중순 공식 브리핑</div>
-              <div class="tl-body">
-                전체 리더 대상 공식 브리핑. 사전 싱크가 완료된 상태이므로 빠르게 정렬 가능합니다.
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="philosophy-banner">
-          <div class="quote">"나의 취약성을 드러내도 된다는 안전한 그라운드"</div>
-          <div class="quote-sub">
-            브리핑에서 강조할 핵심 메시지입니다. AI를 모르는 것이 부끄러운 게 아니라,
-            모른다는 것을 말할 수 없는 문화가 문제입니다. 리더들이 먼저 이 분위기를 만들어가도록 함께 이야기합니다.
-          </div>
-        </div>
+    <div class="philosophy-banner">
+      <div class="quote">"나의 취약성을 드러내도 된다는 안전한 그라운드"</div>
+      <div class="quote-sub">
+        브리핑에서 강조할 핵심 메시지입니다. AI를 모르는 것이 부끄러운 게 아니라,
+        모른다는 것을 말할 수 없는 문화가 문제입니다. 리더들이 먼저 이 분위기를 만들어가도록 함께 이야기합니다.
       </div>
     </div>
   </section>
