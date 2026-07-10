@@ -3,9 +3,12 @@
     "뒹굴뒹굴__숭댕": {
       "name": "숭댕",
       "team": "뒹굴뒹굴",
-      "points": 60,
-      "chips": 25,
-      "createdAt": "2026-07-10T14:24:14.167Z"
+      "points": 68,
+      "chips": 33,
+      "createdAt": "2026-07-10T14:24:14.167Z",
+      "answeredQuizzes": [
+        "q5"
+      ]
     }
   },
   "submissions": [
