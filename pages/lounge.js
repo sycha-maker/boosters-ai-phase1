@@ -45,6 +45,11 @@ export default function Lounge() {
         </div>
 
         <div className="floor">
+          <Link href="/world" className="station">
+            <div className="emoji">🧭</div>
+            <div className="label">라운지 월드 (베타)</div>
+            <div className="desc">캐릭터로 돌아다니며 참여하기</div>
+          </Link>
           <Link href="/report" className="station">
             <div className="emoji">🕵️</div>
             <div className="label">크리덴셜 제보</div>
