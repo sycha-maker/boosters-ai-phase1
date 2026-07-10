@@ -3,8 +3,8 @@
     "뒹굴뒹굴__숭댕": {
       "name": "숭댕",
       "team": "뒹굴뒹굴",
-      "points": 0,
-      "chips": 0,
+      "points": 15,
+      "chips": 15,
       "createdAt": "2026-07-10T14:24:14.167Z"
     }
   },
@@ -21,8 +21,10 @@
         "노션/드라이브 공유 링크"
       ],
       "riskScore": 1,
-      "status": "pending",
-      "createdAt": "2026-07-10T14:25:20.523Z"
+      "status": "approved",
+      "createdAt": "2026-07-10T14:25:20.523Z",
+      "reviewedAt": "2026-07-10T14:34:57.387Z",
+      "reviewer": "admin"
     }
   ]
 }
