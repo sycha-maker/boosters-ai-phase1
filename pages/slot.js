@@ -21,6 +21,17 @@ export default function Slot() {
       return;
     }
     setSession(s);
+    // 쿠키에 캐시된 칩 수는 오래됐을 수 있으므로 서버 기준 최신값으로 동기화
+    fetch(`/api/me?userKey=${encodeURIComponent(s.userKey)}`)
+      .then((r) => r.json())
+      .then((json) => {
+        if (json.user) {
+          const updated = { ...s, chips: json.user.chips ?? s.chips };
+          setSession(updated);
+          saveSession(updated);
+        }
+      })
+      .catch(() => {});
   }, []);
 
   async function spin() {

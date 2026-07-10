@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { readSession, clearSession } from "../lib/client";
+import { readSession, saveSession, clearSession } from "../lib/client";
 
 export default function Lounge() {
   const router = useRouter();
@@ -14,13 +14,15 @@ export default function Lounge() {
       return;
     }
     setSession(s);
-    fetch("/api/leaderboard")
+    // 쿠키에 캐시된 칩 수는 오래됐을 수 있으므로 서버 기준 최신값으로 동기화
+    fetch(`/api/me?userKey=${encodeURIComponent(s.userKey)}`)
       .then((r) => r.json())
       .then((json) => {
-        const me = (json.leaderboard || []).find(
-          (u) => u.name === s.name && u.team === s.team
-        );
-        if (me) setSession((prev) => ({ ...prev, chips: me.chips }));
+        if (json.user) {
+          const updated = { ...s, chips: json.user.chips ?? s.chips };
+          setSession(updated);
+          saveSession(updated);
+        }
       })
       .catch(() => {});
   }, []);
