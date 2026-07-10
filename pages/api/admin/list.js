@@ -1,6 +1,6 @@
-const { readData } = require("../../../lib/db");
+import { readData } from "../../../lib/db";
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method !== "GET") return res.status(405).json({ error: "method not allowed" });
   const passcode = req.query.passcode;
   if (!passcode || passcode !== process.env.ADMIN_PASSCODE) {
@@ -15,4 +15,4 @@ module.exports = async function handler(req, res) {
   } catch (e) {
     res.status(500).json({ error: String(e.message || e) });
   }
-};
+}

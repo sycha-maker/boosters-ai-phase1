@@ -1,7 +1,7 @@
-const { withData } = require("../../../lib/db");
-const { pointsForSubmission } = require("../../../lib/scoring");
+import { withData } from "../../../lib/db";
+import { pointsForSubmission } from "../../../lib/scoring";
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "method not allowed" });
   const { id, action, passcode } = req.body || {};
   if (!passcode || passcode !== process.env.ADMIN_PASSCODE) {
@@ -41,4 +41,4 @@ module.exports = async function handler(req, res) {
   } catch (e) {
     res.status(e.status || 500).json({ error: String(e.message || e) });
   }
-};
+}

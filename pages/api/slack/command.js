@@ -1,14 +1,14 @@
-const crypto = require("crypto");
-const { withData, makeId } = require("../../../lib/db");
-const { scanText } = require("../../../lib/keywordFilter");
-const { STARTER_CHIPS } = require("../../../lib/scoring");
+import crypto from "crypto";
+import { withData, makeId } from "../../../lib/db";
+import { scanText } from "../../../lib/keywordFilter";
+import { STARTER_CHIPS } from "../../../lib/scoring";
 
 // Slack Slash Command 수신 엔드포인트.
 // 설정 방법(Slack 관리자가 진행): Slack API 콘솔 > Slash Commands > /제보 생성 후
 // Request URL을 https://<배포도메인>/api/slack/command 로 지정하면 바로 연동됩니다.
 // SLACK_SIGNING_SECRET 환경변수를 설정하면 요청 서명을 검증합니다(미설정 시 검증 생략 — 데모 전용).
 
-module.exports.config = {
+export const config = {
   api: { bodyParser: false },
 };
 
@@ -37,7 +37,7 @@ function verifySlackSignature(rawBody, req) {
   }
 }
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).send("method not allowed");
 
   const rawBody = await readRawBody(req);
@@ -102,4 +102,4 @@ module.exports = async function handler(req, res) {
       text: `⚠️ 접수 중 오류가 발생했습니다: ${String(e.message || e)}`,
     });
   }
-};
+}

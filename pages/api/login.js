@@ -1,7 +1,7 @@
-const { withData } = require("../../lib/db");
-const { STARTER_CHIPS } = require("../../lib/scoring");
+import { withData } from "../../lib/db";
+import { STARTER_CHIPS } from "../../lib/scoring";
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "method not allowed" });
   const { userKey, name, team } = req.body || {};
   if (!userKey || !name) return res.status(400).json({ error: "userKey, name required" });
@@ -25,4 +25,4 @@ module.exports = async function handler(req, res) {
   } catch (e) {
     res.status(500).json({ error: String(e.message || e) });
   }
-};
+}

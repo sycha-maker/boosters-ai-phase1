@@ -1,4 +1,4 @@
-const { withData } = require("../../../lib/db");
+import { withData } from "../../../lib/db";
 
 const SYMBOLS = ["🍒", "🔔", "💎", "7️⃣", "🍋"];
 
@@ -22,7 +22,7 @@ function reelFor(tier) {
   ];
 }
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "method not allowed" });
   const { userKey, bet } = req.body || {};
   const betNum = Number(bet);
@@ -49,4 +49,4 @@ module.exports = async function handler(req, res) {
   } catch (e) {
     res.status(e.status || 500).json({ error: String(e.message || e) });
   }
-};
+}

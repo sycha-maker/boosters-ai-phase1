@@ -1,8 +1,8 @@
-const { withData, makeId } = require("../../lib/db");
-const { scanText } = require("../../lib/keywordFilter");
-const { STARTER_CHIPS } = require("../../lib/scoring");
+import { withData, makeId } from "../../lib/db";
+import { scanText } from "../../lib/keywordFilter";
+import { STARTER_CHIPS } from "../../lib/scoring";
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "method not allowed" });
   const { userKey, name, team, link, note, source } = req.body || {};
   if (!userKey || !name || !link) {
@@ -42,4 +42,4 @@ module.exports = async function handler(req, res) {
   } catch (e) {
     res.status(500).json({ error: String(e.message || e) });
   }
-};
+}
