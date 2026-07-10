@@ -1,6 +1,7 @@
 import { withData, makeId } from "../../lib/db";
 import { scanText } from "../../lib/keywordFilter";
 import { STARTER_CHIPS } from "../../lib/scoring";
+import { notifyNewSubmission } from "../../lib/notifySlack";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "method not allowed" });
@@ -38,6 +39,7 @@ export default async function handler(req, res) {
       }
       return null;
     }, `report: ${submission.id}`);
+    await notifyNewSubmission(submission);
     res.status(200).json({ ok: true, flags: scan.flags, riskScore: scan.riskScore });
   } catch (e) {
     res.status(500).json({ error: String(e.message || e) });

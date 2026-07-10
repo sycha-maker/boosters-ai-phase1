@@ -2,6 +2,7 @@ import crypto from "crypto";
 import { withData, makeId } from "../../../lib/db";
 import { scanText } from "../../../lib/keywordFilter";
 import { STARTER_CHIPS } from "../../../lib/scoring";
+import { notifyNewSubmission } from "../../../lib/notifySlack";
 
 // Slack Slash Command 수신 엔드포인트.
 // 설정 방법(Slack 관리자가 진행): Slack API 콘솔 > Slash Commands > /제보 생성 후
@@ -89,6 +90,7 @@ export default async function handler(req, res) {
       }
       return null;
     }, `slack report: ${submission.id}`);
+    await notifyNewSubmission(submission);
 
     return res.status(200).json({
       response_type: "ephemeral",

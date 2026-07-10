@@ -35,6 +35,7 @@ Vercel 프로젝트 설정 > Environment Variables 에 아래 값을 등록하�
 | `ADMIN_PASSCODE` | 관리자 검수 페이지 패스코드 (직접 정하기) | `boosters-2026` 등 원하는 값 |
 | `STARTER_CHIPS` | 최초 입장 시 지급할 칩 (선택, 기본 10) | `10` |
 | `SLACK_SIGNING_SECRET` | 슬랙 앱 생성 후 발급되는 Signing Secret (선택) | 나중에 추가 |
+| `SLACK_WEBHOOK_URL` | 신규 제보 발생 시 알림 보낼 슬랙 Incoming Webhook URL (선택) | 아래 "신규 제보 슬랙 알림" 참고 |
 
 ## Vercel 배포 (수동 3단계)
 
@@ -54,6 +55,13 @@ Vercel 프로젝트 설정 > Environment Variables 에 아래 값을 등록하�
 4. 워크스페이스에 앱 설치 → 아카이빙 채널에서 `/제보 <링크> 설명` 형태로 바로 제보 가능
 
 Signing Secret을 등록하기 전에는 요청 서명 검증을 생략하는 데모 모드로 동작합니다(내부 테스트용으로만 사용 권장).
+
+## 신규 제보 슬랙 알림 (선택)
+
+1. 슬랙에서 https://api.slack.com/apps → 앱 생성(또는 기존 앱) → **Incoming Webhooks** 활성화
+2. **Add New Webhook to Workspace** → 알림 받을 채널 선택 → 발급된 Webhook URL 복사
+3. Vercel 환경변수 `SLACK_WEBHOOK_URL`에 등록 후 재배포
+4. 이후 웹 폼/슬랙 `/제보` 어느 쪽으로 제보가 들어와도 해당 채널에 제보자·링크·감지된 키워드가 자동으로 올라옵니다.
 
 ## 알려진 한계 (MVP 범위)
 
