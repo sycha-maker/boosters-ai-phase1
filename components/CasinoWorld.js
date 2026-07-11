@@ -13,6 +13,8 @@ export default function CasinoWorld({ userKey, name, characterId, onEnterZone, o
   const gameRef = useRef(null);
   const channelRef = useRef(null);
   const chatFocusedRef = useRef(false);
+  const chatInputRef = useRef(null);
+  const composingRef = useRef(false);
   const [chatText, setChatText] = useState("");
 
   useEffect(() => {
@@ -139,6 +141,19 @@ export default function CasinoWorld({ userKey, name, characterId, onEnterZone, o
       }
 
       update(time, delta) {
+        // 루프 안에서 어떤 예외가 나더라도(원격 플레이어 데이터 이슈 등) 다음 프레임의
+        // 키보드 입력 처리가 영구히 멈추지 않도록 방어적으로 감싼다.
+        try {
+          this.stepUpdate(time, delta);
+        } catch (err) {
+          if (!this._loggedUpdateError) {
+            console.error("[world] update() error (movement should keep working):", err);
+            this._loggedUpdateError = true;
+          }
+        }
+      }
+
+      stepUpdate(time, delta) {
         if (!this.player) return;
         const speed = 220 * (delta / 1000);
         let dx = 0;
@@ -233,7 +248,18 @@ export default function CasinoWorld({ userKey, name, characterId, onEnterZone, o
         const data = msg.data;
         if (!data || data.id === userKey) return;
         const scene = game.scene.getScene("main");
-        if (scene) scene.showBubble(data.id, data.text);
+        if (!scene) return;
+        // 아직 pos 메시지를 한 번도 못 받은 상대(이동이 안 되거나 막 접속한 경우)여도
+        // 말풍선이 보이도록, 없으면 임시 위치에 캐릭터를 먼저 만들어둔다.
+        if (!scene.remoteContainers.has(data.id)) {
+          scene.addOrUpdateRemote(data.id, {
+            x: WORLD.width / 2,
+            y: WORLD.height / 2 + 80,
+            name: data.name,
+            characterId: data.characterId,
+          });
+        }
+        scene.showBubble(data.id, data.text);
       });
 
       channel.presence.subscribe("leave", (member) => {
@@ -262,13 +288,17 @@ export default function CasinoWorld({ userKey, name, characterId, onEnterZone, o
   }, []);
 
   const sendChat = () => {
-    const text = chatText.trim();
+    // 한글 IME 조합 중 Enter로 조합을 확정하는 시점과 React state 업데이트 타이밍이
+    // 어긋나면 일부 글자만 전송되는 문제가 있어, 전송 시점엔 state가 아니라
+    // 실제 DOM input의 값을 그대로 읽어 사용한다 (항상 화면에 보이는 그대로 전송됨).
+    const raw = chatInputRef.current ? chatInputRef.current.value : chatText;
+    const text = raw.trim();
     if (!text) return;
     setChatText("");
     const scene = gameRef.current?.scene?.getScene("main");
     if (scene) scene.showBubble(userKey, text);
     try {
-      channelRef.current?.publish("chat", { id: userKey, text });
+      channelRef.current?.publish("chat", { id: userKey, text, name, characterId });
     } catch (e) {
       /* noop */
     }
@@ -299,6 +329,7 @@ export default function CasinoWorld({ userKey, name, characterId, onEnterZone, o
         }}
       >
         <input
+          ref={chatInputRef}
           className="field"
           style={{ marginBottom: 0, flex: 1 }}
           placeholder="말풍선으로 인사해보세요 (최대 40자)"
@@ -311,8 +342,17 @@ export default function CasinoWorld({ userKey, name, characterId, onEnterZone, o
           onBlur={() => {
             chatFocusedRef.current = false;
           }}
+          onCompositionStart={() => {
+            composingRef.current = true;
+          }}
+          onCompositionEnd={() => {
+            composingRef.current = false;
+          }}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
+              // 한글/일본어 등 IME로 글자를 조합 중일 때 누른 Enter는 조합 확정용이므로
+              // 여기서 바로 전송하면 안 됨 (마지막 글자만 전송되는 버그의 원인).
+              if (composingRef.current || e.nativeEvent?.isComposing) return;
               e.preventDefault();
               sendChat();
             }
