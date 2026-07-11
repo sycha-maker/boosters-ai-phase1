@@ -22,12 +22,13 @@
     "루숭숭__루울프": {
       "name": "루울프",
       "team": "루숭숭",
-      "points": 16,
-      "chips": 16,
+      "points": 24,
+      "chips": 24,
       "createdAt": "2026-07-11T13:33:55.432Z",
       "answeredQuizzes": [
         "q9",
-        "q3"
+        "q3",
+        "q6"
       ]
     }
   },
