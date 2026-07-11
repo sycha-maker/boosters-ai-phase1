@@ -27,6 +27,21 @@ export default function CasinoWorld({ userKey, name, characterId, onEnterZone, o
     let channel;
     let destroyed = false;
 
+    // 이동 키 상태를 Phaser의 내장 키보드 플러그인 대신 직접 추적한다.
+    // (일부 환경에서 Phaser의 cursors/wasd.isDown이 알 수 없는 이유로 멈추는 사례가
+    // 확인되어, 이미 안정적으로 동작이 확인된 "/" 채팅 단축키와 같은 방식으로 통일)
+    const heldKeys = { left: false, right: false, up: false, down: false };
+    const MOVE_KEY_CODES = {
+      ArrowLeft: "left",
+      ArrowRight: "right",
+      ArrowUp: "up",
+      ArrowDown: "down",
+      KeyA: "left",
+      KeyD: "right",
+      KeyW: "up",
+      KeyS: "down",
+    };
+
     class MainScene extends Phaser.Scene {
       constructor() {
         super("main");
@@ -72,12 +87,6 @@ export default function CasinoWorld({ userKey, name, characterId, onEnterZone, o
 
         this.cameras.main.setBounds(0, 0, WORLD.width, WORLD.height);
         this.cameras.main.startFollow(this.player, true, 0.15, 0.15);
-
-        this.cursors = this.input.keyboard.createCursorKeys();
-        this.wasd = this.input.keyboard.addKeys({ up: "W", down: "S", left: "A", right: "D" });
-
-        // "/" 키로 채팅창을 열 때 그 "/"자가 그대로 게임 입력으로 처리되지 않도록 차단
-        this.input.keyboard.addCapture("/");
 
         this.lastSent = 0;
         this.lastPos = { x: this.player.x, y: this.player.y };
@@ -165,11 +174,14 @@ export default function CasinoWorld({ userKey, name, characterId, onEnterZone, o
         let dx = 0;
         let dy = 0;
         // 채팅창이 열려 있을 때는 방향키 입력을 이동에 쓰지 않는다.
+        // (Phaser 내장 키보드 플러그인의 cursors/wasd 대신, 브라우저 keydown/keyup을
+        // 직접 추적하는 heldKeys를 사용한다 — 일부 환경에서 Phaser 내장 키 상태가
+        // 알 수 없는 이유로 갱신을 멈추는 문제가 있어 더 단순하고 견고한 방식으로 대체함)
         if (!chatOpenRef.current) {
-          if (this.cursors.left.isDown || this.wasd.left.isDown) dx -= 1;
-          if (this.cursors.right.isDown || this.wasd.right.isDown) dx += 1;
-          if (this.cursors.up.isDown || this.wasd.up.isDown) dy -= 1;
-          if (this.cursors.down.isDown || this.wasd.down.isDown) dy += 1;
+          if (heldKeys.left) dx -= 1;
+          if (heldKeys.right) dx += 1;
+          if (heldKeys.up) dy -= 1;
+          if (heldKeys.down) dy += 1;
         }
 
         if (dx !== 0 || dy !== 0) {
@@ -241,9 +253,30 @@ export default function CasinoWorld({ userKey, name, characterId, onEnterZone, o
       if (e.key !== "/") return;
       e.preventDefault();
       chatOpenRef.current = true;
+      heldKeys.left = heldKeys.right = heldKeys.up = heldKeys.down = false;
       setChatOpen(true);
     };
     window.addEventListener("keydown", openChatOnSlash);
+
+    // 이동 키 상태 추적 (채팅창이 열려 있는 동안은 무시 — 채팅 입력창의 커서 이동과 충돌 방지)
+    const handleMoveKeyDown = (e) => {
+      if (chatOpenRef.current) return;
+      const dir = MOVE_KEY_CODES[e.code];
+      if (!dir) return;
+      e.preventDefault();
+      heldKeys[dir] = true;
+    };
+    const handleMoveKeyUp = (e) => {
+      const dir = MOVE_KEY_CODES[e.code];
+      if (!dir) return;
+      heldKeys[dir] = false;
+    };
+    const clearHeldKeys = () => {
+      heldKeys.left = heldKeys.right = heldKeys.up = heldKeys.down = false;
+    };
+    window.addEventListener("keydown", handleMoveKeyDown);
+    window.addEventListener("keyup", handleMoveKeyUp);
+    window.addEventListener("blur", clearHeldKeys);
 
     try {
       ably = new Ably.Realtime({
@@ -292,6 +325,9 @@ export default function CasinoWorld({ userKey, name, characterId, onEnterZone, o
     return () => {
       destroyed = true;
       window.removeEventListener("keydown", openChatOnSlash);
+      window.removeEventListener("keydown", handleMoveKeyDown);
+      window.removeEventListener("keyup", handleMoveKeyUp);
+      window.removeEventListener("blur", clearHeldKeys);
       window.removeEventListener("focus", focusCanvas);
       try {
         channel?.presence.leave();
