@@ -1,14 +1,19 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Phaser from "phaser";
 import * as Ably from "ably";
 import { ZONES, WORLD } from "../lib/zones";
 import { getCharacter } from "../lib/characters";
+
+const CHAT_MAX_LEN = 40;
 
 // 클라이언트 전용 컴포넌트 (pages에서 반드시 { ssr: false }로 dynamic import 할 것).
 // Phaser 씬 + Ably 실시간 포지션 동기화를 함께 관리한다.
 export default function CasinoWorld({ userKey, name, characterId, onEnterZone, onExitZone }) {
   const containerRef = useRef(null);
   const gameRef = useRef(null);
+  const channelRef = useRef(null);
+  const chatFocusedRef = useRef(false);
+  const [chatText, setChatText] = useState("");
 
   useEffect(() => {
     if (!containerRef.current || gameRef.current) return;
@@ -103,15 +108,47 @@ export default function CasinoWorld({ userKey, name, characterId, onEnterZone, o
         }
       }
 
+      // 말풍선 채팅: id가 본인이면 this.player 위에, 아니면 해당 원격 플레이어 컨테이너 위에 표시
+      showBubble(id, text) {
+        const target = id === userKey ? this.player : this.remoteContainers.get(id)?.container;
+        if (!target || !text) return;
+        if (target.bubble) {
+          target.bubble.destroy();
+          target.bubble = null;
+        }
+        const clipped = text.length > CHAT_MAX_LEN ? `${text.slice(0, CHAT_MAX_LEN)}…` : text;
+        const bubbleText = this.add
+          .text(0, 0, clipped, {
+            fontSize: "13px",
+            color: "#1a1a1a",
+            backgroundColor: "#f5f5be",
+            padding: { x: 8, y: 5 },
+            wordWrap: { width: 170 },
+            align: "center",
+          })
+          .setOrigin(0.5, 1);
+        const bubble = this.add.container(0, -46, [bubbleText]);
+        target.add(bubble);
+        target.bubble = bubble;
+        this.time.delayedCall(4000, () => {
+          if (target.bubble === bubble) {
+            bubble.destroy();
+            target.bubble = null;
+          }
+        });
+      }
+
       update(time, delta) {
         if (!this.player) return;
         const speed = 220 * (delta / 1000);
         let dx = 0;
         let dy = 0;
-        if (this.cursors.left.isDown || this.wasd.left.isDown) dx -= 1;
-        if (this.cursors.right.isDown || this.wasd.right.isDown) dx += 1;
-        if (this.cursors.up.isDown || this.wasd.up.isDown) dy -= 1;
-        if (this.cursors.down.isDown || this.wasd.down.isDown) dy += 1;
+        if (!chatFocusedRef.current) {
+          if (this.cursors.left.isDown || this.wasd.left.isDown) dx -= 1;
+          if (this.cursors.right.isDown || this.wasd.right.isDown) dx += 1;
+          if (this.cursors.up.isDown || this.wasd.up.isDown) dy -= 1;
+          if (this.cursors.down.isDown || this.wasd.down.isDown) dy += 1;
+        }
 
         if (dx !== 0 || dy !== 0) {
           const len = Math.hypot(dx, dy) || 1;
@@ -181,6 +218,7 @@ export default function CasinoWorld({ userKey, name, characterId, onEnterZone, o
         authUrl: `/api/ably-auth?clientId=${encodeURIComponent(userKey)}`,
       });
       channel = ably.channels.get("casino-world");
+      channelRef.current = channel;
 
       channel.subscribe("pos", (msg) => {
         if (destroyed) return;
@@ -188,6 +226,14 @@ export default function CasinoWorld({ userKey, name, characterId, onEnterZone, o
         if (!data || data.id === userKey) return;
         const scene = game.scene.getScene("main");
         if (scene) scene.addOrUpdateRemote(data.id, data);
+      });
+
+      channel.subscribe("chat", (msg) => {
+        if (destroyed) return;
+        const data = msg.data;
+        if (!data || data.id === userKey) return;
+        const scene = game.scene.getScene("main");
+        if (scene) scene.showBubble(data.id, data.text);
       });
 
       channel.presence.subscribe("leave", (member) => {
@@ -210,22 +256,77 @@ export default function CasinoWorld({ userKey, name, characterId, onEnterZone, o
       }
       game.destroy(true);
       gameRef.current = null;
+      channelRef.current = null;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const sendChat = () => {
+    const text = chatText.trim();
+    if (!text) return;
+    setChatText("");
+    const scene = gameRef.current?.scene?.getScene("main");
+    if (scene) scene.showBubble(userKey, text);
+    try {
+      channelRef.current?.publish("chat", { id: userKey, text });
+    } catch (e) {
+      /* noop */
+    }
+  };
+
   return (
-    <div
-      ref={containerRef}
-      style={{
-        width: WORLD.width,
-        maxWidth: "100%",
-        aspectRatio: `${WORLD.width} / ${WORLD.height}`,
-        margin: "0 auto",
-        borderRadius: 12,
-        overflow: "hidden",
-        border: "1px solid rgba(255,255,255,0.15)",
-      }}
-    />
+    <div>
+      <div
+        ref={containerRef}
+        style={{
+          width: WORLD.width,
+          maxWidth: "100%",
+          aspectRatio: `${WORLD.width} / ${WORLD.height}`,
+          margin: "0 auto",
+          borderRadius: 12,
+          overflow: "hidden",
+          border: "1px solid rgba(255,255,255,0.15)",
+        }}
+      />
+      <div
+        style={{
+          display: "flex",
+          gap: 8,
+          marginTop: 10,
+          maxWidth: WORLD.width,
+          marginLeft: "auto",
+          marginRight: "auto",
+        }}
+      >
+        <input
+          className="field"
+          style={{ marginBottom: 0, flex: 1 }}
+          placeholder="말풍선으로 인사해보세요 (최대 40자)"
+          maxLength={CHAT_MAX_LEN}
+          value={chatText}
+          onChange={(e) => setChatText(e.target.value)}
+          onFocus={() => {
+            chatFocusedRef.current = true;
+          }}
+          onBlur={() => {
+            chatFocusedRef.current = false;
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              sendChat();
+            }
+          }}
+        />
+        <button
+          className="btn secondary"
+          style={{ width: "auto", padding: "0 20px" }}
+          onClick={sendChat}
+          type="button"
+        >
+          말하기
+        </button>
+      </div>
+    </div>
   );
 }
