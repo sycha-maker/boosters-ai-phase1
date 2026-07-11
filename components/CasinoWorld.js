@@ -156,10 +156,25 @@ export default function CasinoWorld({ userKey, name, characterId, onEnterZone, o
       parent: containerRef.current,
       backgroundColor: "#141821",
       scene: MainScene,
+      // 탭을 전환했다 돌아와도 게임 루프가 멈추지 않도록 (일부 브라우저에서
+      // 캔버스 포커스/가시성 변화 후 키보드 입력이 안 먹는 문제 방지)
+      disableVisibilityChange: true,
+      input: {
+        keyboard: { target: window },
+      },
     };
 
     const game = new Phaser.Game(config);
     gameRef.current = game;
+
+    // 캔버스가 포커스를 잃어도 다시 클릭하면 확실히 포커스를 되찾도록 처리
+    const focusCanvas = () => {
+      if (containerRef.current) containerRef.current.setAttribute("tabindex", "0");
+      game.canvas?.focus?.();
+    };
+    game.events.once(Phaser.Core.Events.READY, focusCanvas);
+    containerRef.current.addEventListener("click", focusCanvas);
+    window.addEventListener("focus", focusCanvas);
 
     try {
       ably = new Ably.Realtime({
