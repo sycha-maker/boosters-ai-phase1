@@ -12,9 +12,12 @@ export default function CasinoWorld({ userKey, name, characterId, onEnterZone, o
   const containerRef = useRef(null);
   const gameRef = useRef(null);
   const channelRef = useRef(null);
-  const chatFocusedRef = useRef(false);
   const chatInputRef = useRef(null);
   const composingRef = useRef(false);
+  // 채팅창이 열려 있는지를 이펙트 내부(클로저)에서도 항상 최신값으로 읽기 위한 ref.
+  // (React state는 클로저 안에서 stale할 수 있어 별도로 동기화한다)
+  const chatOpenRef = useRef(false);
+  const [chatOpen, setChatOpen] = useState(false);
   const [chatText, setChatText] = useState("");
 
   useEffect(() => {
@@ -72,6 +75,9 @@ export default function CasinoWorld({ userKey, name, characterId, onEnterZone, o
 
         this.cursors = this.input.keyboard.createCursorKeys();
         this.wasd = this.input.keyboard.addKeys({ up: "W", down: "S", left: "A", right: "D" });
+
+        // "/" 키로 채팅창을 열 때 그 "/"자가 그대로 게임 입력으로 처리되지 않도록 차단
+        this.input.keyboard.addCapture("/");
 
         this.lastSent = 0;
         this.lastPos = { x: this.player.x, y: this.player.y };
@@ -158,7 +164,8 @@ export default function CasinoWorld({ userKey, name, characterId, onEnterZone, o
         const speed = 220 * (delta / 1000);
         let dx = 0;
         let dy = 0;
-        if (!chatFocusedRef.current) {
+        // 채팅창이 열려 있을 때는 방향키 입력을 이동에 쓰지 않는다.
+        if (!chatOpenRef.current) {
           if (this.cursors.left.isDown || this.wasd.left.isDown) dx -= 1;
           if (this.cursors.right.isDown || this.wasd.right.isDown) dx += 1;
           if (this.cursors.up.isDown || this.wasd.up.isDown) dy -= 1;
@@ -228,6 +235,16 @@ export default function CasinoWorld({ userKey, name, characterId, onEnterZone, o
     containerRef.current.addEventListener("click", focusCanvas);
     window.addEventListener("focus", focusCanvas);
 
+    // "/" 키를 누르면 채팅창을 연다 (슬래시 커맨드처럼). 이미 열려 있으면 무시.
+    const openChatOnSlash = (e) => {
+      if (chatOpenRef.current) return;
+      if (e.key !== "/") return;
+      e.preventDefault();
+      chatOpenRef.current = true;
+      setChatOpen(true);
+    };
+    window.addEventListener("keydown", openChatOnSlash);
+
     try {
       ably = new Ably.Realtime({
         authUrl: `/api/ably-auth?clientId=${encodeURIComponent(userKey)}`,
@@ -274,6 +291,8 @@ export default function CasinoWorld({ userKey, name, characterId, onEnterZone, o
 
     return () => {
       destroyed = true;
+      window.removeEventListener("keydown", openChatOnSlash);
+      window.removeEventListener("focus", focusCanvas);
       try {
         channel?.presence.leave();
         ably?.close();
@@ -287,85 +306,113 @@ export default function CasinoWorld({ userKey, name, characterId, onEnterZone, o
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // 채팅창이 새로 열리면 입력창에 자동 포커스
+  useEffect(() => {
+    if (chatOpen) {
+      const raf = requestAnimationFrame(() => chatInputRef.current?.focus());
+      return () => cancelAnimationFrame(raf);
+    }
+  }, [chatOpen]);
+
+  const closeChat = () => {
+    chatOpenRef.current = false;
+    setChatOpen(false);
+    setChatText("");
+    // 채팅창을 닫는 즉시 캔버스로 포커스를 돌려줘서 화살표 키가 바로 다시 먹도록 함
+    requestAnimationFrame(() => gameRef.current?.canvas?.focus());
+  };
+
   const sendChat = () => {
     // 한글 IME 조합 중 Enter로 조합을 확정하는 시점과 React state 업데이트 타이밍이
     // 어긋나면 일부 글자만 전송되는 문제가 있어, 전송 시점엔 state가 아니라
     // 실제 DOM input의 값을 그대로 읽어 사용한다 (항상 화면에 보이는 그대로 전송됨).
     const raw = chatInputRef.current ? chatInputRef.current.value : chatText;
     const text = raw.trim();
-    if (!text) return;
-    setChatText("");
-    const scene = gameRef.current?.scene?.getScene("main");
-    if (scene) scene.showBubble(userKey, text);
-    try {
-      channelRef.current?.publish("chat", { id: userKey, text, name, characterId });
-    } catch (e) {
-      /* noop */
+    if (text) {
+      const scene = gameRef.current?.scene?.getScene("main");
+      if (scene) scene.showBubble(userKey, text);
+      try {
+        channelRef.current?.publish("chat", { id: userKey, text, name, characterId });
+      } catch (e) {
+        /* noop */
+      }
     }
+    closeChat();
   };
 
   return (
     <div>
-      <div
-        ref={containerRef}
-        style={{
-          width: WORLD.width,
-          maxWidth: "100%",
-          aspectRatio: `${WORLD.width} / ${WORLD.height}`,
-          margin: "0 auto",
-          borderRadius: 12,
-          overflow: "hidden",
-          border: "1px solid rgba(255,255,255,0.15)",
-        }}
-      />
-      <div
-        style={{
-          display: "flex",
-          gap: 8,
-          marginTop: 10,
-          maxWidth: WORLD.width,
-          marginLeft: "auto",
-          marginRight: "auto",
-        }}
-      >
-        <input
-          ref={chatInputRef}
-          className="field"
-          style={{ marginBottom: 0, flex: 1 }}
-          placeholder="말풍선으로 인사해보세요 (최대 40자)"
-          maxLength={CHAT_MAX_LEN}
-          value={chatText}
-          onChange={(e) => setChatText(e.target.value)}
-          onFocus={() => {
-            chatFocusedRef.current = true;
-          }}
-          onBlur={() => {
-            chatFocusedRef.current = false;
-          }}
-          onCompositionStart={() => {
-            composingRef.current = true;
-          }}
-          onCompositionEnd={() => {
-            composingRef.current = false;
-          }}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              // 한글/일본어 등 IME로 글자를 조합 중일 때 누른 Enter는 조합 확정용이므로
-              // 여기서 바로 전송하면 안 됨 (마지막 글자만 전송되는 버그의 원인).
-              if (composingRef.current || e.nativeEvent?.isComposing) return;
-              e.preventDefault();
-              sendChat();
-            }
+      <div style={{ position: "relative" }}>
+        <div
+          ref={containerRef}
+          style={{
+            width: WORLD.width,
+            maxWidth: "100%",
+            aspectRatio: `${WORLD.width} / ${WORLD.height}`,
+            margin: "0 auto",
+            borderRadius: 12,
+            overflow: "hidden",
+            border: "1px solid rgba(255,255,255,0.15)",
           }}
         />
-        <button
-          className="btn secondary"
-          style={{ width: "auto", padding: "0 20px" }}
-          onClick={sendChat}
-          type="button"
-        >
-          말하기
-        </button>
+        {chatOpen && (
+          <div
+            style={{
+              position: "absolute",
+              left: "50%",
+              bottom: 16,
+              transform: "translateX(-50%)",
+              width: "88%",
+              maxWidth: 420,
+              display: "flex",
+              gap: 8,
+              background: "rgba(10,12,16,0.92)",
+              border: "1px solid rgba(245,245,190,0.5)",
+              borderRadius: 10,
+              padding: 8,
+              boxShadow: "0 4px 16px rgba(0,0,0,0.4)",
+            }}
+          >
+            <input
+              ref={chatInputRef}
+              className="field"
+              style={{ marginBottom: 0, flex: 1 }}
+              placeholder="메시지 입력 후 Enter (Esc 취소)"
+              maxLength={CHAT_MAX_LEN}
+              value={chatText}
+              onChange={(e) => setChatText(e.target.value)}
+              onCompositionStart={() => {
+                composingRef.current = true;
+              }}
+              onCompositionEnd={() => {
+                composingRef.current = false;
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  // 한글/일본어 등 IME로 글자를 조합 중일 때 누른 Enter는 조합 확정용이므로
+                  // 여기서 바로 전송하면 안 됨 (마지막 글자만 전송되는 버그의 원인).
+                  if (composingRef.current || e.nativeEvent?.isComposing) return;
+                  e.preventDefault();
+                  sendChat();
+                } else if (e.key === "Escape") {
+                  e.preventDefault();
+                  closeChat();
+                }
+              }}
+            />
+            <button
+              className="btn secondary"
+              style={{ width: "auto", padding: "0 16px" }}
+              onClick={sendChat}
+              type="button"
+            >
+              전송
+            </button>
+          </div>
+        )}
+      </div>
+      <div className="hint" style={{ marginTop: 10, textAlign: "center" }}>
+        <b>/</b> 키를 누르면 말풍선 채팅창이 열려요 (Enter 전송 · Esc 취소)
       </div>
     </div>
   );
