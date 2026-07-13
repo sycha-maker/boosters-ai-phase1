@@ -39,6 +39,14 @@
         "q1",
         "q10"
       ]
+    },
+    "sy.cha@boosters.kr": {
+      "name": "숭댕",
+      "team": "뒹굴뒹굴",
+      "email": "sy.cha@boosters.kr",
+      "points": 0,
+      "chips": 10,
+      "createdAt": "2026-07-13T05:31:00.101Z"
     }
   },
   "submissions": [
@@ -127,5 +135,6 @@
       "reviewedAt": "2026-07-10T14:34:57.387Z",
       "reviewer": "admin"
     }
-  ]
+  ],
+  "dropzone": {}
 }
