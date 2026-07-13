@@ -1,0 +1,15 @@
+name: Lucky Dropzone Daily Open
+
+on:
+  schedule:
+    - cron: "30 8 * * *" # 17:30 KST (UTC+9) = 08:30 UTC
+  workflow_dispatch: {}
+
+jobs:
+  open:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger dropzone open
+        run: |
+          curl -sf -X GET "https://boosters-ai-phase1-git-credential-casino-mvp-boosters-aded225f.vercel.app/api/dropzone/cron-open" \
+            -H "Authorization: Bearer ${{ secrets.DROPZONE_CRON_SECRET }}"
