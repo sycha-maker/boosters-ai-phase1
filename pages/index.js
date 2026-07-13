@@ -95,9 +95,19 @@ export default function Home() {
             <button className="btn" type="button" onClick={() => signIn("google")}>
               🔐 Google로 로그인
             </button>
-            {router.query?.error && (
+            {router.query?.error === "AccessDenied" && (
               <div style={{ color: "#ff9c9c", fontSize: 13, marginTop: 12 }}>
                 boosters.kr 계정으로만 로그인할 수 있어요. 다른 계정이면 접속이 제한됩니다.
+              </div>
+            )}
+            {router.query?.error === "Configuration" && (
+              <div style={{ color: "#ff9c9c", fontSize: 13, marginTop: 12 }}>
+                로그인 서버 설정에 문제가 있어요 (환경변수 누락 가능성). 관리자에게 문의해주세요.
+              </div>
+            )}
+            {router.query?.error && router.query.error !== "AccessDenied" && router.query.error !== "Configuration" && (
+              <div style={{ color: "#ff9c9c", fontSize: 13, marginTop: 12 }}>
+                로그인 중 오류가 발생했어요 ({router.query.error}). 다시 시도해주세요.
               </div>
             )}
           </div>
