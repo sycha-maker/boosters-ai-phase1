@@ -64,9 +64,12 @@
       "name": "777",
       "team": "777팀",
       "email": "sm.park@boosters.kr",
-      "points": 0,
-      "chips": 10,
-      "createdAt": "2026-07-13T07:23:37.808Z"
+      "points": 8,
+      "chips": 18,
+      "createdAt": "2026-07-13T07:23:37.808Z",
+      "answeredQuizzes": [
+        "q2"
+      ]
     }
   },
   "submissions": [
