@@ -71,19 +71,7 @@ export default function CasinoWorld({ userKey, name, characterId, onEnterZone, o
         });
 
         const char = getCharacter(characterId);
-        this.player = this.add.container(WORLD.width / 2, WORLD.height / 2 + 150);
-        const circle = this.add.circle(0, 0, 18, char.color);
-        circle.setStrokeStyle(2, 0xffffff, 0.85);
-        const emoji = this.add.text(0, 0, char.emoji, { fontSize: "20px" }).setOrigin(0.5);
-        const label = this.add
-          .text(0, -30, name, {
-            fontSize: "12px",
-            color: "#ffffff",
-            backgroundColor: "#00000088",
-            padding: { x: 4, y: 2 },
-          })
-          .setOrigin(0.5);
-        this.player.add([circle, emoji, label]);
+        this.player = this.buildAvatar(WORLD.width / 2, WORLD.height / 2 + 150, char, name);
 
         this.cameras.main.setBounds(0, 0, WORLD.width, WORLD.height);
         this.cameras.main.startFollow(this.player, true, 0.15, 0.15);
@@ -92,23 +80,33 @@ export default function CasinoWorld({ userKey, name, characterId, onEnterZone, o
         this.lastPos = { x: this.player.x, y: this.player.y };
       }
 
+      // 캐릭터를 살짝 더 귀엽고 입체감 있게 보이도록 그림자+광택 하이라이트를 곁들여 만든다.
+      // (커스텀 아트 에셋 없이 이모지 그대로 활용하는 가벼운 방식)
+      buildAvatar(x, y, char, labelText) {
+        const container = this.add.container(x, y);
+        const shadow = this.add.ellipse(0, 21, 30, 9, 0x000000, 0.35);
+        const base = this.add.circle(0, 0, 22, char.color, 1);
+        base.setStrokeStyle(3, 0xffffff, 0.9);
+        const shine = this.add.ellipse(-7, -9, 15, 9, 0xffffff, 0.35);
+        shine.setAngle(-25);
+        const emoji = this.add.text(0, 1, char.emoji, { fontSize: "26px" }).setOrigin(0.5);
+        const label = this.add
+          .text(0, -34, labelText, {
+            fontSize: "12px",
+            color: "#ffffff",
+            backgroundColor: "#00000088",
+            padding: { x: 4, y: 2 },
+          })
+          .setOrigin(0.5);
+        container.add([shadow, base, shine, emoji, label]);
+        return container;
+      }
+
       addOrUpdateRemote(id, data) {
         let entry = this.remoteContainers.get(id);
-        const char = getCharacter(data.characterId);
         if (!entry) {
-          const container = this.add.container(data.x, data.y);
-          const circle = this.add.circle(0, 0, 18, char.color, 1);
-          circle.setStrokeStyle(2, 0xffffff, 0.6);
-          const emoji = this.add.text(0, 0, char.emoji, { fontSize: "20px" }).setOrigin(0.5);
-          const label = this.add
-            .text(0, -30, data.name || "guest", {
-              fontSize: "12px",
-              color: "#ffffff",
-              backgroundColor: "#00000088",
-              padding: { x: 4, y: 2 },
-            })
-            .setOrigin(0.5);
-          container.add([circle, emoji, label]);
+          const char = getCharacter(data.characterId);
+          const container = this.buildAvatar(data.x, data.y, char, data.name || "guest");
           entry = { container, targetX: data.x, targetY: data.y };
           this.remoteContainers.set(id, entry);
         } else {
@@ -144,7 +142,7 @@ export default function CasinoWorld({ userKey, name, characterId, onEnterZone, o
             align: "center",
           })
           .setOrigin(0.5, 1);
-        const bubble = this.add.container(0, -46, [bubbleText]);
+        const bubble = this.add.container(0, -52, [bubbleText]);
         target.add(bubble);
         target.bubble = bubble;
         this.time.delayedCall(4000, () => {

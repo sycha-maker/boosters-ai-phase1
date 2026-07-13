@@ -27,7 +27,7 @@ export default function Home() {
       const json = await resp.json();
       if (!resp.ok) throw new Error(json.error || "로그인 실패");
       saveSession({ userKey, name: name.trim(), team: team.trim(), chips: json.user.chips });
-      router.push("/lounge");
+      router.push("/world");
     } catch (err) {
       setError(String(err.message || err));
     } finally {
