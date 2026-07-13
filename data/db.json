@@ -44,13 +44,14 @@
       "name": "숭댕",
       "team": "뒹굴뒹굴",
       "email": "sy.cha@boosters.kr",
-      "points": 24,
-      "chips": 34,
+      "points": 32,
+      "chips": 42,
       "createdAt": "2026-07-13T05:31:00.101Z",
       "answeredQuizzes": [
         "q9",
         "q5",
-        "q8"
+        "q8",
+        "q1"
       ]
     }
   },
