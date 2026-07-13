@@ -19,6 +19,7 @@ export default function CasinoWorld({ userKey, name, characterId, onEnterZone, o
   const chatOpenRef = useRef(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [chatText, setChatText] = useState("");
+  const [winnerPopup, setWinnerPopup] = useState(null);
 
   useEffect(() => {
     if (!containerRef.current || gameRef.current) return;
@@ -310,6 +311,12 @@ export default function CasinoWorld({ userKey, name, characterId, onEnterZone, o
         scene.showBubble(data.id, data.text);
       });
 
+      channel.subscribe("dropzone-winner", (msg) => {
+        if (destroyed) return;
+        setWinnerPopup(msg.data);
+        setTimeout(() => setWinnerPopup(null), 6000);
+      });
+
       channel.presence.subscribe("leave", (member) => {
         const scene = game.scene.getScene("main");
         if (scene) scene.removeRemote(member.clientId);
@@ -376,7 +383,31 @@ export default function CasinoWorld({ userKey, name, characterId, onEnterZone, o
 
   return (
     <div>
+      <div className="hint" style={{ textAlign: "center", color: "#f5f5be", marginBottom: 8 }}>
+        🪙 칩을 많이 모을수록 럭키 드롭존(실물 상품) 당첨 확률이 높아져요! 크리덴셜 제보 · 퀴즈로 칩을 모아보세요.
+      </div>
       <div style={{ position: "relative" }}>
+        {winnerPopup && (
+          <div
+            style={{
+              position: "absolute",
+              top: 12,
+              left: "50%",
+              transform: "translateX(-50%)",
+              zIndex: 20,
+              background: "linear-gradient(135deg, #f5f5be, #f5c518)",
+              color: "#1a1a1a",
+              fontWeight: 700,
+              padding: "12px 20px",
+              borderRadius: 12,
+              boxShadow: "0 6px 20px rgba(0,0,0,0.5)",
+              textAlign: "center",
+              maxWidth: "90%",
+            }}
+          >
+            🎉 럭키 드롭존 — {winnerPopup.prizeLabel} 당첨자: {winnerPopup.winnerName}님 축하합니다! 🎊
+          </div>
+        )}
         <div
           ref={containerRef}
           style={{

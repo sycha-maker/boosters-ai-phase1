@@ -5,6 +5,7 @@ export default function Admin() {
   const [passcode, setPasscode] = useState("");
   const [unlocked, setUnlocked] = useState(false);
   const [subs, setSubs] = useState(null);
+  const [dropzoneWinners, setDropzoneWinners] = useState([]);
   const [error, setError] = useState("");
   const [busyId, setBusyId] = useState(null);
 
@@ -23,6 +24,7 @@ export default function Admin() {
       const json = await resp.json();
       if (!resp.ok) throw new Error(json.error || "조회 실패");
       setSubs(json.submissions);
+      setDropzoneWinners(json.dropzoneWinners || []);
       setUnlocked(true);
       sessionStorage.setItem("ccm_admin_pass", pass);
     } catch (e) {
@@ -151,6 +153,21 @@ export default function Admin() {
             ))}
           </>
         )}
+
+        <div className="title" style={{ fontSize: 18, marginTop: 24 }}>
+          🎁 럭키 드롭존 당첨자
+        </div>
+        {dropzoneWinners.length === 0 && <div className="card empty">아직 당첨자가 없습니다.</div>}
+        {dropzoneWinners.map((w, i) => (
+          <div className="card" key={i}>
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+              <b>{w.prizeLabel}</b>
+              <span className="hint" style={{ margin: 0 }}>{w.date}</span>
+            </div>
+            <div style={{ fontSize: 14 }}>당첨자: {w.winnerName}</div>
+            <div className="hint">계정: {w.winnerEmail}</div>
+          </div>
+        ))}
       </div>
     </div>
   );

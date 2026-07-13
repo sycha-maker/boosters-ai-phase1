@@ -11,7 +11,13 @@ export default async function handler(req, res) {
     const submissions = [...data.submissions].sort(
       (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
     );
-    res.status(200).json({ ok: true, submissions });
+    const dropzoneWinners = [...(data.dropzone?.winners || [])]
+      .sort((a, b) => new Date(b.drawnAt) - new Date(a.drawnAt))
+      .map((w) => ({
+        ...w,
+        winnerEmail: data.users?.[w.winnerUserKey]?.email || w.winnerUserKey,
+      }));
+    res.status(200).json({ ok: true, submissions, dropzoneWinners });
   } catch (e) {
     res.status(500).json({ error: String(e.message || e) });
   }
