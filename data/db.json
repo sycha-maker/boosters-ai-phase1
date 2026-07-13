@@ -59,6 +59,14 @@
         "q7",
         "q4"
       ]
+    },
+    "sm.park@boosters.kr": {
+      "name": "777",
+      "team": "777팀",
+      "email": "sm.park@boosters.kr",
+      "points": 0,
+      "chips": 10,
+      "createdAt": "2026-07-13T07:23:37.808Z"
     }
   },
   "submissions": [
