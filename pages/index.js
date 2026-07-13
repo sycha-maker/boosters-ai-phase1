@@ -1,32 +1,68 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { makeUserKey, saveSession } from "../lib/client";
+import { useSession, signIn, signOut } from "next-auth/react";
+import { saveSession } from "../lib/client";
 
 export default function Home() {
   const router = useRouter();
+  const { data: session, status } = useSession();
   const [name, setName] = useState("");
   const [team, setTeam] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [checkingProfile, setCheckingProfile] = useState(true);
+
+  const email = session?.user?.email || "";
+  const userKey = email.toLowerCase();
+
+  // 이미 닉네임을 설정해둔 계정이면 굳이 다시 물어보지 않고 바로 월드로 보낸다.
+  useEffect(() => {
+    if (status !== "authenticated" || !userKey) {
+      setCheckingProfile(false);
+      return;
+    }
+    let cancelled = false;
+    fetch(`/api/me?userKey=${encodeURIComponent(userKey)}`)
+      .then((r) => r.json())
+      .then((json) => {
+        if (cancelled) return;
+        if (json.user && json.user.name) {
+          saveSession({
+            userKey,
+            name: json.user.name,
+            team: json.user.team || "",
+            chips: json.user.chips,
+            email,
+          });
+          router.replace("/world");
+        } else {
+          setCheckingProfile(false);
+        }
+      })
+      .catch(() => setCheckingProfile(false));
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status, userKey]);
 
   async function enter(e) {
     e.preventDefault();
     if (!name.trim()) {
-      setError("이름을 입력해주세요.");
+      setError("게임에서 쓸 별명을 입력해주세요.");
       return;
     }
     setLoading(true);
     setError("");
-    const userKey = makeUserKey(name, team);
     try {
       const resp = await fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userKey, name: name.trim(), team: team.trim() }),
+        body: JSON.stringify({ userKey, name: name.trim(), team: team.trim(), email }),
       });
       const json = await resp.json();
       if (!resp.ok) throw new Error(json.error || "로그인 실패");
-      saveSession({ userKey, name: name.trim(), team: team.trim(), chips: json.user.chips });
+      saveSession({ userKey, name: name.trim(), team: team.trim(), chips: json.user.chips, email });
       router.push("/world");
     } catch (err) {
       setError(String(err.message || err));
@@ -47,28 +83,58 @@ export default function Home() {
           방치된 크리덴셜 하나가 누군가의 잭팟이 되기 전에 — 부스터스 크루 전용 보안 캠페인
         </div>
 
-        <form className="card" onSubmit={enter}>
-          <input
-            className="field"
-            placeholder="이름"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <input
-            className="field"
-            placeholder="팀 (선택)"
-            value={team}
-            onChange={(e) => setTeam(e.target.value)}
-          />
-          {error && <div style={{ color: "#ff9c9c", fontSize: 13, marginBottom: 10 }}>{error}</div>}
-          <button className="btn" type="submit" disabled={loading}>
-            {loading ? "입장 중..." : "🚪 입장하기"}
-          </button>
-        </form>
-        <div className="hint">
-          MVP 데모 버전입니다. 실제 운영 시 이름 입력 대신 사내 Google/Slack SSO 로그인으로 대체할
-          예정입니다.
-        </div>
+        {status === "loading" || checkingProfile ? (
+          <div className="card" style={{ textAlign: "center", color: "#9d9d9d" }}>
+            확인 중...
+          </div>
+        ) : !session ? (
+          <div className="card" style={{ textAlign: "center" }}>
+            <div style={{ marginBottom: 16, color: "#c9c9c9" }}>
+              boosters.kr 계정으로만 입장할 수 있어요.
+            </div>
+            <button className="btn" type="button" onClick={() => signIn("google")}>
+              🔐 Google로 로그인
+            </button>
+            {router.query?.error && (
+              <div style={{ color: "#ff9c9c", fontSize: 13, marginTop: 12 }}>
+                boosters.kr 계정으로만 로그인할 수 있어요. 다른 계정이면 접속이 제한됩니다.
+              </div>
+            )}
+          </div>
+        ) : (
+          <form className="card" onSubmit={enter}>
+            <div style={{ fontSize: 13, color: "#9d9d9d", marginBottom: 12 }}>
+              {email} 로 인증됨 ·{" "}
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  signOut({ callbackUrl: "/" });
+                }}
+              >
+                다른 계정으로
+              </a>
+            </div>
+            <input
+              className="field"
+              placeholder="게임에서 쓸 별명"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <input
+              className="field"
+              placeholder="팀 (선택)"
+              value={team}
+              onChange={(e) => setTeam(e.target.value)}
+            />
+            {error && <div style={{ color: "#ff9c9c", fontSize: 13, marginBottom: 10 }}>{error}</div>}
+            <button className="btn" type="submit" disabled={loading}>
+              {loading ? "입장 중..." : "🚪 입장하기"}
+            </button>
+          </form>
+        )}
+
+        <div className="hint">boosters.kr 계정 인증 후 게임에서 쓸 별명을 설정하면 바로 입장됩니다.</div>
       </div>
     </div>
   );
