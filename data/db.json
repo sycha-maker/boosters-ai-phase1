@@ -64,11 +64,12 @@
       "name": "777",
       "team": "777팀",
       "email": "sm.park@boosters.kr",
-      "points": 8,
-      "chips": 8,
+      "points": 16,
+      "chips": 16,
       "createdAt": "2026-07-13T07:23:37.808Z",
       "answeredQuizzes": [
-        "q2"
+        "q2",
+        "q1"
       ]
     },
     "yh.lee@boosters.kr": {
