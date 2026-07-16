@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 침투 제고 캠페인 — Phase 1.5 실행 기획안</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #F7F6F3;
+      --surface:    #FFFFFF;
+      --border:     #E5E3DC;
+      --text-main:  #1A1916;
+      --text-sub:   #6B6860;
+      --text-muted: #A09E99;
+      --accent:     #4A6CF7;
+      --accent-lt:  #EEF1FE;
+      --amber:      #D97706;
+      --amber-lt:   #FEF3C7;
+      --green:      #059669;
+      --green-lt:   #D1FAE5;
+      --rose:       #E11D48;
+      --rose-lt:    #FFE4E8;
+      --purple:     #7C3AED;
+      --purple-lt:  #EDE9FE;
+      --shadow-sm:  0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+      --radius:     12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Sans KR', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    /* ── CAMPAIGN SWITCHER (Phase 1 / Phase 1.5) ── */
+    .campaign-switcher {
+      position: sticky; top: 0; z-index: 110;
+      background: #1A1F36; padding: 0 2rem;
+    }
+    .switcher-inner {
+      max-width: 900px; margin: 0 auto; height: 42px;
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .switcher-tab {
+      font-size: 12.5px; font-weight: 700; letter-spacing: .2px;
+      color: #8A93B8; text-decoration: none;
+      padding: 5px 14px; border-radius: 99px; transition: color .15s, background .15s;
+    }
+    .switcher-tab:hover { color: #fff; }
+    .switcher-tab.active { color: #fff; background: rgba(255,255,255,.14); }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 42px; z-index: 100;
+      background: rgba(247,246,243,.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+    .nav-inner {
+      max-width: 900px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 56px;
+    }
+    .nav-logo {
+      font-weight: 700; font-size: 14px; color: var(--text-main);
+      letter-spacing: -.2px; display: flex; align-items: center; gap: 8px;
+    }
+    .nav-logo .badge {
+      background: var(--rose); color: #fff;
+      font-size: 10px; font-weight: 600;
+      padding: 2px 8px; border-radius: 99px; letter-spacing: .4px;
+    }
+    .nav-links { display: flex; gap: 1.35rem; list-style: none; flex-wrap: wrap; }
+    .nav-links a {
+      font-size: 12.5px; color: var(--text-sub); text-decoration: none;
+      font-weight: 500; transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--text-main); }
+
+    /* ── HERO ── */
+    .hero { max-width: 900px; margin: 0 auto; padding: 5rem 2rem 3.5rem; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--rose-lt); color: var(--rose);
+      font-size: 12px; font-weight: 600; letter-spacing: .6px;
+      padding: 4px 12px; border-radius: 99px; text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 2.7rem); font-weight: 700;
+      line-height: 1.3; letter-spacing: -.5px; margin-bottom: 1rem;
+    }
+    .hero h1 em { font-style: normal; color: var(--rose); }
+    .hero-desc {
+      font-size: 15.5px; color: var(--text-sub); max-width: 620px;
+      line-height: 1.85; margin-bottom: 1.5rem;
+    }
+    .hero-meta { display: flex; gap: 1.5rem; flex-wrap: wrap; font-size: 12.5px; color: var(--text-muted); margin-bottom: 2rem; }
+    .hero-meta strong { color: var(--text-sub); font-weight: 600; }
+    .hero-philosophy {
+      background: var(--surface); border: 1px solid var(--border);
+      border-left: 4px solid var(--rose); border-radius: var(--radius);
+      padding: 1.25rem 1.5rem; font-size: 14.5px; color: var(--text-sub);
+      max-width: 620px; line-height: 1.85;
+    }
+    .hero-philosophy strong { color: var(--text-main); font-weight: 600; }
+    .philo-tags { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .75rem; }
+    .philo-tag {
+      font-size: 12px; font-weight: 700; padding: 4px 11px; border-radius: 99px;
+      background: var(--rose-lt); color: var(--rose);
+    }
+
+    /* ── OVERVIEW CARDS ── */
+    .overview { max-width: 900px; margin: 0 auto; padding: 0 2rem 4rem; }
+    .overview-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem;
+    }
+    .ov-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.25rem 1.25rem 1rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .ov-icon { font-size: 1.4rem; margin-bottom: .5rem; }
+    .ov-label {
+      font-size: 11px; font-weight: 600; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: .5px; margin-bottom: .25rem;
+    }
+    .ov-value { font-size: 13.5px; font-weight: 600; color: var(--text-main); line-height: 1.4; }
+
+    /* ── SECTION WRAPPER ── */
+    .sections {
+      max-width: 900px; margin: 0 auto; padding: 0 2rem 6rem;
+      display: flex; flex-direction: column; gap: 3rem;
+    }
+
+    .section-header { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.25rem; }
+    .section-num {
+      flex-shrink: 0; width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; margin-top: 2px;
+    }
+    .section-title { font-size: 1.3rem; font-weight: 700; letter-spacing: -.3px; line-height: 1.3; }
+    .section-subtitle { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); box-shadow: var(--shadow-sm); overflow: hidden;
+    }
+    .card + .card { margin-top: 1rem; }
+    .card-header {
+      padding: 1rem 1.5rem; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .card-tag {
+      font-size: 11px; font-weight: 700; letter-spacing: .5px;
+      padding: 3px 10px; border-radius: 99px;
+    }
+    .card-title { font-weight: 600; font-size: 15px; }
+    .card-body { padding: 1.25rem 1.5rem; }
+
+    /* ── INFO ROWS ── */
+    .info-row {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: .65rem 0; border-bottom: 1px solid var(--border);
+    }
+    .info-row:last-child { border-bottom: none; }
+    .info-key {
+      flex-shrink: 0; width: 120px; font-size: 12px; font-weight: 600;
+      color: var(--text-muted); text-transform: uppercase; letter-spacing: .4px; padding-top: 2px;
+    }
+    .info-val { font-size: 14px; color: var(--text-main); flex: 1; line-height: 1.7; }
+    .info-val .chip {
+      display: inline-block; background: var(--bg); border: 1px solid var(--border);
+      border-radius: 6px; font-size: 12px; font-weight: 500;
+      padding: 2px 8px; margin: 2px 3px 2px 0;
+    }
+
+    /* ── FLOW ── */
+    .flow { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem; margin-top: .25rem; }
+    .flow-step { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 3px 10px; font-size: 12.5px; font-weight: 500; white-space: nowrap; }
+    .flow-arrow { color: var(--text-muted); font-size: 13px; }
+
+    /* ── NOTICE / NOTE ── */
+    .notice { display: flex; gap: .6rem; align-items: flex-start; background: #FFF7ED; border: 1px solid #FCD34D; border-radius: 8px; padding: .75rem 1rem; margin-top: .5rem; font-size: 13px; color: #92400E; line-height: 1.6; }
+    .notice-icon { flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+    .note { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: .75rem 1rem; font-size: 13px; color: var(--text-sub); line-height: 1.6; margin-top: .5rem; }
+
+    /* ── TABLE ── */
+    table.matrix { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    table.matrix th, table.matrix td { padding: .8rem 1rem; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+    table.matrix th { background: #FAFAF8; font-weight: 700; font-size: 12px; color: var(--text-sub); text-transform: uppercase; letter-spacing: .3px; }
+    table.matrix tr:last-child td { border-bottom: none; }
+    table.matrix td.rowlabel { font-weight: 700; color: var(--text-main); white-space: nowrap; width: 96px; }
+
+    /* ── TARGET GROUP CARDS ── */
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 640px) { .grid2 { grid-template-columns: 1fr; } }
+    .group-card { border-radius: 10px; padding: 1.35rem; border: 1px solid var(--border); }
+    .group-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-bottom: .5rem; }
+    .group-name { font-size: 16.5px; font-weight: 700; margin-bottom: .75rem; }
+    .group-items { list-style: none; display: flex; flex-direction: column; gap: .4rem; }
+    .group-items li { font-size: 13.5px; color: var(--text-sub); display: flex; align-items: flex-start; gap: .5rem; line-height: 1.6; }
+    .group-items li::before { content: '·'; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+    /* ── RATIONALE NUM LIST ── */
+    .num-list { display: flex; flex-direction: column; gap: .75rem; margin-top: .5rem; }
+    .num-item { display: flex; gap: .75rem; align-items: flex-start; }
+    .num-bullet { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: var(--accent-lt); color: var(--accent); font-size: 11.5px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+    .num-text { font-size: 13.5px; color: var(--text-main); line-height: 1.65; }
+    .num-text .sub { color: var(--text-sub); }
+
+    /* ── CURRICULUM ── */
+    .curr-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: .85rem; }
+    .curr-card { border-radius: 10px; padding: 1.1rem; border: 1px solid var(--border); background: var(--bg); }
+    .curr-num { font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: .5px; margin-bottom: .4rem; }
+    .curr-title { font-size: 14px; font-weight: 700; margin-bottom: .35rem; line-height: 1.4; }
+    .curr-desc { font-size: 12.5px; color: var(--text-sub); line-height: 1.6; }
+
+    /* ── OPTION CARD (자산 통제 기술 옵션) ── */
+    .option-card { border-radius: 10px; padding: 1.1rem 1.25rem; border: 1px solid var(--border); background: var(--surface); }
+    .option-card + .option-card { margin-top: .75rem; }
+    .option-top { display: flex; align-items: center; gap: .6rem; margin-bottom: .5rem; flex-wrap: wrap; }
+    .option-name { font-size: 14px; font-weight: 700; }
+    .option-level { font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 99px; }
+    .option-desc { font-size: 13.5px; color: var(--text-sub); line-height: 1.7; }
+    .option-reco { display: inline-flex; align-items: center; gap: 4px; font-size: 11.5px; font-weight: 700; color: var(--green); margin-top: .5rem; }
+
+    /* ── SCHEDULE TABLE ── */
+    .sched-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    .sched-table th { text-align: left; font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; padding: .6rem 1rem; background: var(--bg); border-bottom: 2px solid var(--border); }
+    .sched-table td { padding: .85rem 1rem; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.6; }
+    .sched-table tr:last-child td { border-bottom: none; }
+    .sched-event { color: var(--text-main); font-weight: 600; }
+    .sched-detail { font-size: 12.5px; color: var(--text-sub); margin-top: .2rem; line-height: 1.55; }
+    .milestone { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; letter-spacing: .3px; white-space: nowrap; }
+
+    /* ── PHILOSOPHY BANNER ── */
+    .philosophy-banner {
+      background: linear-gradient(135deg, #FFF1F3 0%, #F0F4FF 100%);
+      border: 1px solid #FBD5DE; border-radius: var(--radius);
+      padding: 1.75rem 2rem; margin-top: 1rem; position: relative; overflow: hidden;
+    }
+    .philosophy-banner::before {
+      content: '"'; position: absolute; top: -10px; left: 16px;
+      font-size: 100px; color: rgba(225,29,72,.08); font-family: Georgia, serif; line-height: 1;
+    }
+    .philosophy-banner .quote { font-size: 17px; font-weight: 700; color: var(--text-main); margin-bottom: .5rem; line-height: 1.5; position: relative; }
+    .philosophy-banner .quote-sub { font-size: 13.5px; color: var(--text-sub); line-height: 1.75; position: relative; }
+
+    .section-divider { border: none; border-top: 1px solid var(--border); }
+
+    footer { text-align: center; padding: 2.5rem; font-size: 13px; color: var(--text-muted); border-top: 1px solid var(--border); }
+
+    .c-accent { color: var(--accent); } .c-amber { color: var(--amber); } .c-green { color: var(--green); } .c-purple { color: var(--purple); } .c-rose { color: var(--rose); }
+    .bg-accent-lt { background: var(--accent-lt); } .bg-amber-lt { background: var(--amber-lt); } .bg-green-lt { background: var(--green-lt); } .bg-purple-lt { background: var(--purple-lt); } .bg-rose-lt { background: var(--rose-lt); }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ CAMPAIGN SWITCHER ═══════════════ -->
+<div class="campaign-switcher">
+  <div class="switcher-inner">
+    <a href="index.html" class="switcher-tab">Phase 1 · 실행 계획</a>
+    <a href="phase1.5.html" class="switcher-tab active">Phase 1.5 · 보안 캠페인</a>
+  </div>
+</div>
+
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">
+      Boosters AX 전환 캠페인
+      <span class="badge">Phase 1.5</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#background">배경</a></li>
+      <li><a href="#segments">타깃</a></li>
+      <li><a href="#education">초급 교육</a></li>
+      <li><a href="#fgi">FGI</a></li>
+      <li><a href="#assets">자산 통제</a></li>
+      <li><a href="#schedule">스케줄</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<header class="hero">
+  <div class="hero-eyebrow">🔐 보안이 문화가 되는 순간</div>
+  <h1>AX가 무르익는 지금,<br><em>보안 인지</em>를 함께 세웁니다</h1>
+  <p class="hero-desc">
+    Phase 1에서 Claude Pro/Max를 비롯한 AI 툴 지급이 전사로 확산되며, AI로 만든 파일과 링크가 여기저기 던져지는 상황이 함께 늘고 있습니다.
+    Phase 2 진입 전, 우리의 자산을 스스로 지키는 인식을 세우는 Phase 1.5를 제안합니다.
+  </p>
+  <div class="hero-meta">
+    <span><strong>작성일</strong> 2026.07.16</span>
+    <span><strong>작성자</strong> PR&amp;Communications 차수연</span>
+    <span><strong>선행 문서</strong> 크리덴셜 클린업 캠페인 CHRO 제안서 (2026.07.10)</span>
+  </div>
+  <div class="hero-philosophy">
+    <strong>💛 캠페인이 지키는 세 가지 태도</strong><br>
+    강제로 단속하는 캠페인이 아니라, 자유롭게 쓰되 스스로 선을 지키는 습관을 만드는 캠페인입니다.
+    <div class="philo-tags">
+      <span class="philo-tag">잘 쓰게끔</span>
+      <span class="philo-tag">Boosting Access Friendly</span>
+      <span class="philo-tag">책임감(Risk 인지) by 스스로</span>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════ OVERVIEW ═══════════════ -->
+<section class="overview">
+  <div class="overview-grid">
+    <div class="ov-card"><div class="ov-icon">📋</div><div class="ov-label">Section 1</div><div class="ov-value">배경 &amp; What / Why</div></div>
+    <div class="ov-card"><div class="ov-icon">🎯</div><div class="ov-label">Section 2</div><div class="ov-value">타깃 세그먼트</div></div>
+    <div class="ov-card"><div class="ov-icon">🎓</div><div class="ov-label">Section 3</div><div class="ov-value">초급 보안 교육</div></div>
+    <div class="ov-card"><div class="ov-icon">💬</div><div class="ov-label">Section 4</div><div class="ov-value">중상급 FGI</div></div>
+    <div class="ov-card"><div class="ov-icon">🛡️</div><div class="ov-label">Section 5</div><div class="ov-value">자산 통제 방안</div></div>
+    <div class="ov-card"><div class="ov-icon">📅</div><div class="ov-label">Section 6</div><div class="ov-value">실행 스케줄(안)</div></div>
+  </div>
+</section>
+
+<!-- ═══════════════ SECTIONS ═══════════════ -->
+<main class="sections">
+
+  <!-- ══ 1. BACKGROUND / WHAT / WHY ══ -->
+  <section id="background">
+    <div class="section-header">
+      <div class="section-num bg-rose-lt c-rose">1</div>
+      <div>
+        <div class="section-title">배경 &amp; What / Why</div>
+        <div class="section-subtitle">왜 지금, 보안 인지 캠페인인가</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-tag bg-rose-lt c-rose">배경</span><span class="card-title">Phase 1이 확산되며 함께 온 리스크</span></div>
+      <div class="card-body">
+        <p style="font-size:14px; color:var(--text-sub); line-height:1.8;">
+          2026년 7월 1일 Phase 1이 시작되며 다수 크루가 Claude Pro/Max 계정을 지급받았고, 이외 AI 툴 구매도 함께 늘고 있습니다.
+          AX가 조직 전반에 자리잡아가는 지금이, 도구 확산과 함께 따라와야 할 '보안' 인식을 세우기 좋은 시점입니다.
+          Phase 2 진입 전 Phase 1.5로 보안 캠페인을 제안합니다.
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-tag bg-accent-lt c-accent">What</span><span class="card-title">목적</span></div>
+      <div class="card-body">
+        <p style="font-size:14px; color:var(--text-main); line-height:1.8;">
+          부스터스 모든 크루가 <strong>'보안'에 대한 인지</strong>를 형성하도록, Phase 1.5 단계 강의 및 캠페인을 진행한다.
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-tag bg-amber-lt c-amber">Why</span><span class="card-title">필요성</span></div>
+      <div class="card-body">
+        <div class="info-row">
+          <div class="info-key">자산 보호</div>
+          <div class="info-val">AI를 활용한 여러 파일들이 아무렇게나 던져지고 있는 상황에서, 우리 자산을 보호하기 위한 인식 전환 캠페인이 필요합니다. AX 챌린지 웹사이트도 부스터스 계정 로그인으로 접근은 통제되어 있으나, 접속 이후엔 모든 크루의 결과물이 열람 가능해 개인의 도덕적 판단에만 맡기기 어렵습니다.</div>
+        </div>
+        <div class="info-row">
+          <div class="info-key">단계별 접근</div>
+          <div class="info-val">AI 활용도와 보안 인지 정도는 크루마다 편차가 큽니다. 하나의 방식으로 전사를 동일하게 다루기보다, AI 활용도와 인지 정도에 따라 오디언스 군을 나누어 진행합니다.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ══ 2. TARGET SEGMENTS ══ -->
+  <section id="segments">
+    <div class="section-header">
+      <div class="section-num bg-accent-lt c-accent">2</div>
+      <div>
+        <div class="section-title">타깃 세그먼트</div>
+        <div class="section-subtitle">AX 숙련도 × 활용 규모 기준으로 오디언스를 둘로 나눕니다</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-tag bg-accent-lt c-accent">2-1</span><span class="card-title">세그먼트 매트릭스</span></div>
+      <div class="card-body">
+        <div class="grid2">
+          <div class="group-card bg-accent-lt" style="border-color:#C7CEEA;">
+            <div class="group-label c-accent">Group 1 · Target</div>
+            <div class="group-name">AX 초급 단계 직원</div>
+            <ul class="group-items">
+              <li><strong>목표(지향점)</strong> — 기본적인 보안 인지 형성. "몰라서 실수하는 일"을 없앤다.</li>
+              <li><strong>컨텐츠(What)</strong> — 무엇을 입력해도 되고 안 되는지, 흔한 실수 시나리오, 오늘부터 지킬 습관</li>
+              <li><strong>방식(How)</strong> — 전 구성원 대상 필수 교육 세션 + 교육자료 배포</li>
+            </ul>
+          </div>
+          <div class="group-card bg-green-lt" style="border-color:#6EE7B7;">
+            <div class="group-label c-green">Group 2 · Target</div>
+            <div class="group-name">AX 중상급 · 긍정/호의적 그룹</div>
+            <ul class="group-items">
+              <li><strong>목표(지향점)</strong> — 자유로운 활용은 권장하되, 스스로 '선을 지키는' 기준을 함께 만든다.</li>
+              <li><strong>컨텐츠(What)</strong> — 서로 어떻게 쓰고 있는지, 쓰면서 느낀 보안 문제 의식, 앞으로의 방향</li>
+              <li><strong>방식(How)</strong> — 소규모 FGI(Focus Group Interview) 진행</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-tag bg-accent-lt c-accent">2-2</span><span class="card-title">세그먼트를 나누는 이유</span></div>
+      <div class="card-body">
+        <div class="num-list">
+          <div class="num-item"><div class="num-bullet">1</div><div class="num-text">AX <strong>숙련도에 따라</strong> 필요한 개입의 형태가 다릅니다 — 초급은 '기준을 알려주는 교육', 중상급은 '기준을 함께 만드는 대화'가 필요합니다.</div></div>
+          <div class="num-item"><div class="num-bullet">2</div><div class="num-text">실제 <strong>사용률과 영향력(민감도)의 크기(Size)</strong>가 그룹마다 다릅니다 — 이미 많이 쓰는 그룹일수록 노출되는 리스크의 총량이 큽니다.</div></div>
+          <div class="num-item"><div class="num-bullet">3</div><div class="num-text">두 트랙 모두 결국 하나의 문화로 <strong>'연동'</strong>되어야 합니다 — 초급 교육에서 나온 질문이 FGI 의제가 되고, FGI에서 나온 기준이 다음 교육자료에 반영되는 순환 구조를 지향합니다.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ══ 3. EDUCATION (초급) ══ -->
+  <section id="education">
+    <div class="section-header">
+      <div class="section-num bg-amber-lt c-amber">3</div>
+      <div>
+        <div class="section-title">초급 대상 — 보안 인지 교육</div>
+        <div class="section-subtitle">전 구성원이 함께 이수하는 기초 세션</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-tag bg-amber-lt c-amber">3-1</span><span class="card-title">교육 구성 개요</span></div>
+      <div class="card-body">
+        <div class="info-row"><div class="info-key">형식</div><div class="info-val">PPTX 강의 슬라이드 — 온/오프라인 세션 겸용, 별도 교육자료 초안 제작 (본 기획안과 별첨)</div></div>
+        <div class="info-row"><div class="info-key">대상</div><div class="info-val">전 크루 (AX 초급 단계 중심, 사실상 전사 필수 이수 권장)</div></div>
+        <div class="info-row"><div class="info-key">분량</div><div class="info-val">약 20~25분 세션 1회 — 클래스 818 기초반과 연계 가능</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-tag bg-amber-lt c-amber">3-2</span><span class="card-title">커리큘럼 초안</span></div>
+      <div class="card-body">
+        <div class="curr-grid">
+          <div class="curr-card"><div class="curr-num">01</div><div class="curr-title">왜 지금 보안인가</div><div class="curr-desc">AX 확산과 함께 늘어난 리스크 배경 공유</div></div>
+          <div class="curr-card"><div class="curr-num">02</div><div class="curr-title">잘못된 습관 vs 좋은 습관</div><div class="curr-desc">실제 있을 법한 사내 시나리오 비교</div></div>
+          <div class="curr-card"><div class="curr-num">03</div><div class="curr-title">입력해도 되는 정보 vs 안 되는 정보</div><div class="curr-desc">AI 입력 기준 가이드</div></div>
+          <div class="curr-card"><div class="curr-num">04</div><div class="curr-title">흔한 실수 시나리오</div><div class="curr-desc">슬랙·노션·드라이브에서 자주 발생하는 사례</div></div>
+          <div class="curr-card"><div class="curr-num">05</div><div class="curr-title">오늘부터 지키는 습관 체크리스트</div><div class="curr-desc">바로 실천 가능한 행동 6가지</div></div>
+          <div class="curr-card"><div class="curr-num">06</div><div class="curr-title">제보(줍줍) 안내</div><div class="curr-desc">크리덴셜 클린업 캠페인 예고 &amp; 연결</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ══ 4. FGI (중상급) ══ -->
+  <section id="fgi">
+    <div class="section-header">
+      <div class="section-num bg-green-lt c-green">4</div>
+      <div>
+        <div class="section-title">중상급 긍정/호의적 그룹 — FGI</div>
+        <div class="section-subtitle">자유로운 활용을 권장하되, '선을 지키자'는 기준을 함께 세우는 대화</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-tag bg-green-lt c-green">4-1</span><span class="card-title">FGI 목적</span></div>
+      <div class="card-body">
+        <p style="font-size:14px; color:var(--text-main); line-height:1.8;">
+          이미 AI를 적극적으로 쓰고 있는 크루를 '단속'하지 않습니다. 자유로운 AI 활용은 계속 권장하되, 함께 지킬 '선'이 무엇인지 이들의 목소리로 정의합니다.
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-tag bg-green-lt c-green">4-2</span><span class="card-title">FGI 질문 구성(안)</span></div>
+      <div class="card-body">
+        <div class="info-row"><div class="info-key">Q1 · 현황</div><div class="info-val">서로 AI를 어떻게 업무에 쓰고 있는가</div></div>
+        <div class="info-row"><div class="info-key">Q2 · 인식</div><div class="info-val">쓰면서 느낀 보안 관련 문제 의식은 무엇이었는가</div></div>
+        <div class="info-row"><div class="info-key">Q3 · 방향</div><div class="info-val">앞으로 이 기준을 어떻게 만들어가면 좋을지</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-tag bg-green-lt c-green">4-3</span><span class="card-title">운영 방식(안)</span></div>
+      <div class="card-body">
+        <div class="info-row"><div class="info-key">참가 규모</div><div class="info-val">6~8인 소규모 그룹, 부서 혼합 구성 권장</div></div>
+        <div class="info-row"><div class="info-key">진행</div><div class="info-val">PR&amp;Communications 주관, 필요 시 Tech팀 옵저버 참여</div></div>
+        <div class="info-row"><div class="info-key">산출물 활용</div><div class="info-val">FGI 결과는 ① 초급 교육자료 개정판 사례 소스, ② 자산 통제 정책(Section 5)의 실행 기준으로 반영</div></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ══ 5. ASSET CONTROL ══ -->
+  <section id="assets">
+    <div class="section-header">
+      <div class="section-num bg-purple-lt c-purple">5</div>
+      <div>
+        <div class="section-title">자연스러운 자산 통제 방법</div>
+        <div class="section-subtitle">교육·문화만으로 채워지지 않는 부분은 기술적 장치로 보완합니다</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-tag bg-purple-lt c-purple">5-1</span><span class="card-title">사이트 론칭을 boosters-ax.vercel.app 파생 경로로만 한정하기</span></div>
+      <div class="card-body">
+        <p style="font-size:13.5px; color:var(--text-sub); line-height:1.75; margin-bottom:.75rem;">
+          "사이트를 론칭하고 싶은 직원이 생겼을 때, 이 링크에서 파생된 경로로만 만들 수 있게 한정할 수 없는지"에 대한 실행 옵션입니다. 강도 순으로 정리했습니다.
+        </p>
+
+        <div class="option-card">
+          <div class="option-top"><span class="option-name">Option A · 모노레포 통합 배포</span><span class="option-level bg-green-lt c-green">통제력 최상</span></div>
+          <div class="option-desc">모든 사이드 프로젝트를 하나의 Next.js 프로젝트 안에 <code>/apps/[slug]</code> 라우트로 편입합니다. 배포 자체가 하나의 도메인(boosters-ax.vercel.app)에서만 이뤄지므로, 구조적으로 도메인 밖에 사이트가 존재할 수 없습니다. 편입은 PR 리뷰를 거칩니다.</div>
+        </div>
+        <div class="option-card">
+          <div class="option-top"><span class="option-name">Option B · 회사 Vercel 조직 계정 통합</span><span class="option-level bg-amber-lt c-amber">통제력 중</span></div>
+          <div class="option-desc">개인 Vercel 계정 대신 회사 Vercel Org로 프로젝트를 이전하고, <code>&lt;slug&gt;.boosters-ax.vercel.app</code> 형태의 서브도메인만 발급합니다. 배포 권한은 Tech팀이 관리합니다.</div>
+        </div>
+        <div class="option-card">
+          <div class="option-top"><span class="option-name">Option C · 정책적 게이트</span><span class="option-level bg-rose-lt c-rose">통제력 낮음 · 시작하기 쉬움</span></div>
+          <div class="option-desc">개인 벤더(Netlify, Lovable 등) 배포 시 Tech 사전 승인을 필수로 하고, 승인된 결과물만 boosters-ax 하위로 이관받습니다. 기술 구축 없이 바로 시행 가능합니다.</div>
+          <div class="option-reco">✓ Phase 1.5 즉시 적용 권장</div>
+        </div>
+
+        <div class="note" style="margin-top:1rem;">
+          💡 <strong style="color:var(--text-main);">제안</strong> — 지금은 Option C(정책)로 즉시 시작하고, Option B(조직 계정 통합)를 병행 준비합니다. Option A는 사이드 프로젝트 수가 늘어나는 Phase 2 이후 고도화 과제로 Tech팀과 별도 논의합니다.
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-tag bg-purple-lt c-purple">5-2</span><span class="card-title">AI 결과물을 boosters.kr 계정으로만 접근 통제하기</span></div>
+      <div class="card-body">
+        <p style="font-size:13.5px; color:var(--text-sub); line-height:1.75; margin-bottom:.75rem;">
+          boosters-ax.vercel.app는 이미 부스터스 Google Workspace 계정으로만 로그인 가능하도록 도메인이 제한되어 있습니다(OAuth 로그인 시 <code>boosters.kr</code> 도메인 검증). 이 방식을 다른 AI 결과물에도 어떻게 확장할지 정리했습니다.
+        </p>
+
+        <div class="option-card">
+          <div class="option-top"><span class="option-name">방식 1 · 앱마다 로그인 로직 구현</span><span class="option-level bg-amber-lt c-amber">개발 부담 있음</span></div>
+          <div class="option-desc">새 앱을 만들 때마다 Google OAuth + <code>boosters.kr</code> 도메인 검증 코드를 각각 심습니다. 지금 boosters-ax.vercel.app에 쓰인 방식과 동일하지만, 앱 수가 늘어날수록 반복 구현 부담이 커집니다.</div>
+        </div>
+        <div class="option-card">
+          <div class="option-top"><span class="option-name">방식 2 · 공통 접근 게이트웨이 (Cloudflare Access 등)</span><span class="option-level bg-green-lt c-green">확장성 높음</span></div>
+          <div class="option-desc">앱 코드를 건드리지 않고, 도메인/URL 앞단에 Google Workspace 연동 접근 정책(예: Cloudflare Zero Trust Access)을 씌웁니다. <code>boosters.kr</code> 계정이 아니면 앱에 도달하기 전에 차단되므로, 이후 만들어지는 모든 사이드 프로젝트에 로그인 로직 없이 동일한 통제를 일괄 적용할 수 있습니다.</div>
+          <div class="option-reco">✓ 장기 표준으로 권장 · Tech팀 기술 검토 필요</div>
+        </div>
+
+        <div class="note" style="margin-top:1rem;">
+          💡 <strong style="color:var(--text-main);">제안</strong> — Section 5-1의 Option B(조직 계정 통합)와 묶어서, boosters-ax 하위 모든 서브도메인에 공통 게이트웨이를 씌우는 방향을 Tech팀 협의 안건으로 올립니다. 크리덴셜 클린업 캠페인(CHRO 제안서, 2026.07.10)의 접근 통제 문제의식과도 같은 맥락입니다.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ══ 6. SCHEDULE ══ -->
+  <section id="schedule">
+    <div class="section-header">
+      <div class="section-num bg-rose-lt c-rose">6</div>
+      <div>
+        <div class="section-title">실행 스케줄(안)</div>
+        <div class="section-subtitle">확정 전 초안 — 이해관계자 협의 후 확정</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body" style="padding:0;">
+        <table class="sched-table">
+          <thead><tr><th>일정</th><th>내용</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="milestone" style="background:#EEF1FE; color:#4A6CF7;">7월 3주차</span></td>
+              <td><div class="sched-event">기획안 확정 &amp; Tech팀 협의 착수</div><div class="sched-detail">Section 5 자산 통제 옵션(B, C) Tech팀 사전 논의, 초급 교육 PPTX 최종화</div></td>
+            </tr>
+            <tr>
+              <td><span class="milestone" style="background:#D1FAE5; color:#059669;">7월 4주차</span></td>
+              <td><div class="sched-event">FGI 대상자 선정 &amp; 초급 교육 세션 1차 진행</div><div class="sched-detail">중상급 긍정/호의적 그룹 6~8인 섭외, 초급 대상 세션 오픈</div></td>
+            </tr>
+            <tr>
+              <td><span class="milestone" style="background:#FEF3C7; color:#D97706;">8월 1주차</span></td>
+              <td><div class="sched-event">FGI 진행</div><div class="sched-detail">Q1~Q3 질문 기반 소규모 인터뷰, 결과 정리</div></td>
+            </tr>
+            <tr>
+              <td><span class="milestone" style="background:#EDE9FE; color:#7C3AED;">8월 2주차</span></td>
+              <td><div class="sched-event">자산 통제 정책 1차 적용</div><div class="sched-detail">Option C(정책 게이트) 공지 시행, Option B(조직 계정 통합) 기술 검토 완료</div></td>
+            </tr>
+            <tr>
+              <td><span class="milestone" style="background:#FFE4E8; color:#E11D48;">8월 3주차</span></td>
+              <td><div class="sched-event">크리덴셜 클린업 캠페인 연계 착수</div><div class="sched-detail">FGI에서 나온 기준을 반영해 CHRO 제안서(2026.07.10) 캠페인과 통합 실행</div></td>
+            </tr>
+            <tr>
+              <td><span class="milestone" style="background:#D1FAE5; color:#059669;">8월 말</span></td>
+              <td><div class="sched-event">Phase 1.5 성과 리뷰 → Phase 2 진입 판단</div><div class="sched-detail">교육 이수율, FGI 결과 반영도, 자산 통제 적용 현황 종합 리뷰</div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="philosophy-banner">
+      <div class="quote">"강제로 막기보다, 스스로 선을 지키게 만든다"</div>
+      <div class="quote-sub">
+        Phase 1.5의 핵심 메시지입니다. 보안은 통제의 언어가 아니라 습관의 언어로 전달합니다.
+        초급에게는 쉬운 기준을, 중상급에게는 함께 정하는 자율을 — 두 트랙 모두 결국 하나의 문화로 만나야 합니다.
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  Boosters AI 침투 제고 캠페인 &nbsp;·&nbsp; Phase 1.5 실행 기획안(초안) &nbsp;·&nbsp; 2026.07.16 &nbsp;·&nbsp; sy.cha@boosters.kr
+</footer>
+
+</body>
+</html>

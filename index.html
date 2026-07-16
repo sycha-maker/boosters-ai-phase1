@@ -42,8 +42,25 @@
     }
 
     /* ── NAV ── */
+    /* ── CAMPAIGN SWITCHER (Phase 1 / Phase 1.5) ── */
+    .campaign-switcher {
+      position: sticky; top: 0; z-index: 110;
+      background: #1A1F36; padding: 0 2rem;
+    }
+    .switcher-inner {
+      max-width: 900px; margin: 0 auto; height: 42px;
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .switcher-tab {
+      font-size: 12.5px; font-weight: 700; letter-spacing: .2px;
+      color: #8A93B8; text-decoration: none;
+      padding: 5px 14px; border-radius: 99px; transition: color .15s, background .15s;
+    }
+    .switcher-tab:hover { color: #fff; }
+    .switcher-tab.active { color: #fff; background: rgba(255,255,255,.14); }
+
     nav {
-      position: sticky; top: 0; z-index: 100;
+      position: sticky; top: 42px; z-index: 100;
       background: rgba(247,246,243,.92);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border);
@@ -312,6 +329,14 @@
   </style>
 </head>
 <body>
+
+<!-- ═══════════════ CAMPAIGN SWITCHER ═══════════════ -->
+<div class="campaign-switcher">
+  <div class="switcher-inner">
+    <a href="index.html" class="switcher-tab active">Phase 1 · 실행 계획</a>
+    <a href="phase1.5.html" class="switcher-tab">Phase 1.5 · 보안 캠페인</a>
+  </div>
+</div>
 
 <!-- ═══════════════ NAV ═══════════════ -->
 <nav>
