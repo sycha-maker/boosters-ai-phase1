@@ -217,6 +217,13 @@
     .num-text { font-size: 13.5px; color: var(--text-main); line-height: 1.65; }
     .num-text .sub { color: var(--text-sub); }
 
+    /* ── CURRICULUM GRID ── */
+    .curr-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: .85rem; }
+    .curr-card { border-radius: 10px; padding: 1.1rem; border: 1px solid var(--border); background: var(--bg); }
+    .curr-num { font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: .5px; margin-bottom: .4rem; }
+    .curr-title { font-size: 14px; font-weight: 700; margin-bottom: .5rem; line-height: 1.4; }
+    .curr-desc { font-size: 12.5px; color: var(--text-sub); line-height: 1.6; }
+
     /* ── OPTION CARD (역할 재정의) ── */
     .option-card { border-radius: 10px; padding: 1.1rem 1.25rem; border: 1px solid var(--border); background: var(--surface); }
     .option-card + .option-card { margin-top: .75rem; }
@@ -277,16 +284,18 @@
     <ul class="nav-links">
       <li><a href="#status">현황</a></li>
       <li><a href="#analysis">정밀분석</a></li>
+      <li><a href="#survey">설문 인사이트</a></li>
       <li><a href="#diagnosis">문제진단</a></li>
       <li><a href="#roles">역할 재설계</a></li>
-      <li><a href="#restructure">커뮤니티 재편</a></li>
+      <li><a href="#groups">그룹 재편</a></li>
+      <li><a href="#comms">커뮤니케이션</a></li>
     </ul>
   </div>
 </nav>
 
 <!-- ═══════════════ HERO ═══════════════ -->
 <header class="hero">
-  <div class="hero-eyebrow">🔄 커뮤니티, 다시 설계합니다</div>
+  <div class="hero-eyebrow">📋 부스터스가 말하는 일의 정의와 AX</div>
   <h1>Phase 1 기획 당시 우려했던 두 가지가 해소됐습니다<br>이제 <em>개인화된 AX</em>로 갑니다</h1>
   <p class="hero-desc">
     <span style="font-size:13px; color:var(--text-muted);">*우려했던 부분: Tool 신청 남발, 관리 Risk</span>
@@ -294,11 +303,16 @@
   <p class="hero-desc">
     기존 팀과 얼라인된 커뮤니티 중심의 AX 전개 필요성이 줄어듦에 따라, 클래스를 중심으로 구성원들을 모아 스팟성 커뮤니티를 운영합니다.
   </p>
+  <p class="hero-desc">
+    설문을 다시 들여다보니, 구성원들이 던진 질문은 "AI를 빨리 배워야 한다"는 조급함(FOMO)이 아니라
+    "어떻게 하면 일을 더 잘할 수 있을까, 타 부서와 연결될 수 있을까"였습니다. Phase 1.5는 이 질문 위에 다시 씁니다.
+  </p>
   <div class="hero-philosophy">
     <strong>💛 이번 전환이 지키는 세 가지 태도</strong><br>
     커뮤니티를 억지로 굴리는 대신, 리더 개개인의 상태를 정확히 보고, 관계를 인위적으로 만들지 않는 방식으로 전환합니다.
     <div class="philo-tags">
-      <span class="philo-tag">리더 중심 재확인</span>
+      <span class="philo-tag">일의 정의부터</span>
+      <span class="philo-tag">FOMO 아닌 필요</span>
       <span class="philo-tag">강요된 관계 지양</span>
       <span class="philo-tag">개인화된 AX</span>
     </div>
@@ -310,9 +324,11 @@
   <div class="overview-grid">
     <div class="ov-card"><div class="ov-icon">📊</div><div class="ov-label">Section 1</div><div class="ov-value">현황 분석</div></div>
     <div class="ov-card"><div class="ov-icon">🔍</div><div class="ov-label">Section 2</div><div class="ov-value">정밀 분석 — 리더별</div></div>
-    <div class="ov-card"><div class="ov-icon">🚩</div><div class="ov-label">Section 3</div><div class="ov-value">문제 진단</div></div>
-    <div class="ov-card"><div class="ov-icon">🧭</div><div class="ov-label">Section 4</div><div class="ov-value">역할 재설계</div></div>
-    <div class="ov-card"><div class="ov-icon">🎓</div><div class="ov-label">Section 5</div><div class="ov-value">커뮤니티 조정 &amp; 공표</div></div>
+    <div class="ov-card"><div class="ov-icon">📝</div><div class="ov-label">Section 3</div><div class="ov-value">설문 인사이트</div></div>
+    <div class="ov-card"><div class="ov-icon">🚩</div><div class="ov-label">Section 4</div><div class="ov-value">문제 진단</div></div>
+    <div class="ov-card"><div class="ov-icon">🧭</div><div class="ov-label">Section 5</div><div class="ov-value">역할 재설계</div></div>
+    <div class="ov-card"><div class="ov-icon">🎓</div><div class="ov-label">Section 6</div><div class="ov-value">그룹 재편</div></div>
+    <div class="ov-card"><div class="ov-icon">📣</div><div class="ov-label">Section 7</div><div class="ov-value">커뮤니케이션 &amp; 공표</div></div>
   </div>
 </section>
 
@@ -387,10 +403,68 @@
 
   <hr class="section-divider" />
 
-  <!-- ══ 3. 문제 진단 ══ -->
+  <!-- ══ 3. 설문이 말하는 것 ══ -->
+  <section id="survey">
+    <div class="section-header">
+      <div class="section-num bg-accent-lt c-accent">3</div>
+      <div>
+        <div class="section-title">설문이 말하는 것</div>
+        <div class="section-subtitle">전사 AI 활용 설문조사(2026.08.05~11, 60/145명 응답)를 다시 읽었습니다</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-tag bg-accent-lt c-accent">3-1</span><span class="card-title">진짜 질문은 FOMO가 아니었다</span></div>
+      <div class="card-body">
+        <div class="info-row"><div class="info-key">응답률</div><div class="info-val">41.4% <span class="chip">60명 / 145명</span></div></div>
+        <div class="info-row"><div class="info-key">사용 빈도</div><div class="info-val">98.3%가 주 1회 이상 AI 활용</div></div>
+        <div class="info-row"><div class="info-key">자가평가</div><div class="info-val">평균 2.88 / 5점 — 많이 쓴다 ≠ 잘 쓴다</div></div>
+        <div class="notice" style="background:var(--accent-lt); border-color:#C7CEEA; color:var(--text-main);">
+          <span class="notice-icon">💡</span>
+          <span>이미 다들 쓰고 있습니다. 남은 질문은 "더 빨리 배워야 한다"는 조급함이 아니라 <strong>"어떻게 하면 일을 더 잘할 수 있을까, 타 부서와 연결될 수 있을까"</strong>였습니다.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-tag bg-amber-lt c-amber">3-2</span><span class="card-title">세 가지 응답, 그 이면의 질문</span></div>
+      <div class="card-body">
+        <div class="num-list">
+          <div class="num-item"><div class="num-bullet">1</div><div class="num-text">
+            <strong>반복 업무 자동화 / 워크플로우 구성을 모름</strong> <span class="sub">(47%, 1위)</span><br>
+            <span class="sub">왜 반복 업무를 자동화하고 싶은 건지? 단순 효율화를 위해서인가? 그럼 반복 업무는 정합성이 중요하지 않은가?</span>
+          </div></div>
+          <div class="num-item"><div class="num-bullet">2</div><div class="num-text">
+            <strong>효과적인 프롬프트 작성법을 잘 모름</strong> <span class="sub">(43%, 2위)</span><br>
+            <span class="sub">AI 툴 사용은 마치 사람 1명당 후배 1명이 들어온 개념 — 후배에게 일을 맡기려면 어떻게 말을 걸어야 하는지, 내 뇌를 이식해 손발처럼 일하게 만들 수 있을지에 대한 고민이 깊어서 2위를 차지한 것으로 보임</span>
+          </div></div>
+          <div class="num-item"><div class="num-bullet">3</div><div class="num-text">
+            <strong>브랜든·뷰티처럼 사업부의 응답률이 낮음</strong> <span class="sub">(브랜든 35.0% · 뷰티 42.4%, 4개 그룹 중 최저·중하위)</span><br>
+            <span class="sub">활용도에 대한 필요성이 떨어지는 것으로 확인 — 사업부는 주로 세일즈·마케팅·콘텐츠 직무. 기타 응답 중에는 API Key, Vercel 등 개발 지식 부족에 대한 부담도 있음 → 개발자와 함께 일한다고 생각하면 되는데, 어떤 분석·프로그램을 구현하고 싶은지 기획하는 개념이 아직 부족한 것으로 보임</span>
+          </div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-tag bg-green-lt c-green">3-3</span><span class="card-title">인터뷰로 확인한 것 — Branden Global Sales 재현님</span></div>
+      <div class="card-body">
+        <div class="info-row"><div class="info-key">이미 하는 것</div><div class="info-val">GA 데이터·시트 자동화 등 "번거로움을 더는" 용도로는 이미 적극 활용 중</div></div>
+        <div class="info-row"><div class="info-key">안 하는 것</div><div class="info-val">카피, 캠페인 전략처럼 판단이 필요한 영역은 "인간이 더 낫다"고 느껴 AI에 맡기지 않음</div></div>
+        <div class="info-row"><div class="info-key">필요한 것</div><div class="info-val">지금 당장 업무에 쓸 일보다, "이것도 가능하구나"를 보여주는 <strong>가능성과 상상력을 여는 세션</strong>이 먼저</div></div>
+        <div class="note">
+          인터뷰 중 마케팅 클래스는 신청이 아닌 <strong style="color:var(--text-main);">필참</strong>으로 진행하기로 확정됨 — Group 1 계획(Section 6)에 반영.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ══ 4. 문제 진단 ══ -->
   <section id="diagnosis">
     <div class="section-header">
-      <div class="section-num bg-amber-lt c-amber">3</div>
+      <div class="section-num bg-amber-lt c-amber">4</div>
       <div>
         <div class="section-title">문제 진단</div>
         <div class="section-subtitle">커뮤니티 활성화 문제와 그 뒤의 비즈니스 차원 문제</div>
@@ -398,7 +472,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><span class="card-tag bg-amber-lt c-amber">3-1</span><span class="card-title">커뮤니티 활성화부터 해야 함</span></div>
+      <div class="card-header"><span class="card-tag bg-amber-lt c-amber">4-1</span><span class="card-title">커뮤니티 활성화부터 해야 함</span></div>
       <div class="card-body">
         <p style="font-size:14px; color:var(--text-main); line-height:1.8;">
           방법은 <strong>클래스818</strong> — 치호님 <strong>8/12</strong> 시작
@@ -407,7 +481,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><span class="card-tag bg-rose-lt c-rose">3-2</span><span class="card-title">비즈니스 차원의 문제</span></div>
+      <div class="card-header"><span class="card-tag bg-rose-lt c-rose">4-2</span><span class="card-title">비즈니스 차원의 문제</span></div>
       <div class="card-body">
         <p style="font-size:14px; color:var(--text-sub); line-height:1.8;">
           마케팅, 콘텐츠 등 현업 조직의 미숙함 &amp; 가이드 없이 만들어진 결과물들 — 현업에서 충돌이 발생할 수도 있고, 위축될 수도 있습니다.
@@ -418,10 +492,10 @@
 
   <hr class="section-divider" />
 
-  <!-- ══ 4. 넥스트 스텝 — 역할 재설계 ══ -->
+  <!-- ══ 5. 넥스트 스텝 — 역할 재설계 ══ -->
   <section id="roles">
     <div class="section-header">
-      <div class="section-num bg-purple-lt c-purple">4</div>
+      <div class="section-num bg-purple-lt c-purple">5</div>
       <div>
         <div class="section-title">넥스트 스텝 — 역할 재설계</div>
         <div class="section-subtitle">커뮤니티 리드의 역할, 커뮤니티의 역할 — 무엇이 작동했고 무엇이 작동하지 않았는가</div>
@@ -429,7 +503,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><span class="card-tag bg-purple-lt c-purple">4-1</span><span class="card-title">커뮤니티 리드의 역할</span></div>
+      <div class="card-header"><span class="card-tag bg-purple-lt c-purple">5-1</span><span class="card-title">커뮤니티 리드의 역할</span></div>
       <div class="card-body">
         <div class="option-card">
           <div class="option-top"><span class="option-name dead">퀄리티 컨트롤</span><span class="option-level" style="background:var(--bg); color:var(--text-muted); border:1px solid var(--border);">안 하는 듯</span></div>
@@ -448,7 +522,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><span class="card-tag bg-purple-lt c-purple">4-2</span><span class="card-title">커뮤니티의 역할</span></div>
+      <div class="card-header"><span class="card-tag bg-purple-lt c-purple">5-2</span><span class="card-title">커뮤니티의 역할</span></div>
       <div class="card-body">
         <div class="option-card">
           <div class="option-top"><span class="option-name dead">업무 교류 + AI</span><span class="option-level" style="background:var(--bg); color:var(--text-muted); border:1px solid var(--border);">잘 안 되는 듯</span></div>
@@ -466,41 +540,90 @@
 
   <hr class="section-divider" />
 
-  <!-- ══ 5. 넥스트 스텝 — 커뮤니티 조정 & 공표 ══ -->
-  <section id="restructure">
+  <!-- ══ 6. 넥스트 스텝 — 그룹 재편 ══ -->
+  <section id="groups">
     <div class="section-header">
-      <div class="section-num bg-green-lt c-green">5</div>
+      <div class="section-num bg-green-lt c-green">6</div>
       <div>
-        <div class="section-title">넥스트 스텝 — 커뮤니티 조정 &amp; 공표</div>
-        <div class="section-subtitle">2개 그룹으로 나누고, 클래스 오픈 전 커뮤니티 종료를 공표합니다</div>
+        <div class="section-title">넥스트 스텝 — 그룹 재편</div>
+        <div class="section-subtitle">업무 성격에 따라 두 그룹으로 나누어 후속 진행합니다</div>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-header"><span class="card-tag bg-green-lt c-green">5-1</span><span class="card-title">커뮤니티 조정</span></div>
+      <div class="card-header"><span class="card-tag bg-accent-lt c-accent">6-1</span><span class="card-title">Group 1 · 비선형·비정형 조직 — 마케팅·콘텐츠·세일즈</span></div>
       <div class="card-body">
-        <div class="grid2">
-          <div class="group-card bg-accent-lt" style="border-color:#C7CEEA;">
-            <div class="group-label c-accent">2 Group</div>
-            <div class="group-name">SCM · 채널 · 디자인(콘텐츠)</div>
-            <ul class="group-items">
-              <li>보안과 가이드가 필요함 — Tech가 붙어야 함</li>
-            </ul>
-          </div>
-          <div class="group-card bg-green-lt" style="border-color:#6EE7B7;">
-            <div class="group-label c-green">1 Group</div>
-            <div class="group-name">선생님 Pool + 수강생(커뮤니티원)</div>
-            <ul class="group-items">
-              <li>관계를 인위적으로 만들지 않기</li>
-              <li>커뮤니티보다는 클래스 동기? → <strong>자유 AX 대학</strong></li>
-            </ul>
-          </div>
+        <div class="info-row"><div class="info-key">대상</div><div class="info-val">마케팅, 콘텐츠, 세일즈 등 비선형적·비정형적 업무에 중심을 두고 있는 조직</div></div>
+        <div class="info-row"><div class="info-key">방법</div><div class="info-val">자유 AX 대학 시즌 개강 — 강사진 3명 중심 클래스 오픈</div></div>
+        <div class="curr-grid" style="margin-top:1rem;">
+          <div class="curr-card"><div class="curr-num">01</div><div class="curr-title">마케팅 전용 클래스</div><div class="curr-desc"><span class="status-pill bg-rose-lt c-rose">필참</span></div></div>
+          <div class="curr-card"><div class="curr-num">02</div><div class="curr-title">데이터 분석, BI 만들기</div><div class="curr-desc"><span class="status-pill bg-accent-lt c-accent">신청</span></div></div>
+          <div class="curr-card"><div class="curr-num">03</div><div class="curr-title">나만의 AI 비서 만들기</div><div class="curr-desc"><span class="status-pill bg-accent-lt c-accent">신청</span></div></div>
         </div>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-header"><span class="card-tag bg-rose-lt c-rose">5-2</span><span class="card-title">공표</span></div>
+      <div class="card-header"><span class="card-tag bg-purple-lt c-purple">6-2</span><span class="card-title">Group 2 · 규칙 기반 조직 — SCM·Tech</span></div>
+      <div class="card-body">
+        <div class="info-row"><div class="info-key">대상</div><div class="info-val">SCM, 테크 등 효율·데이터 정합성 등 규칙에 따라 움직일 수 있는 조직</div></div>
+        <div class="info-row"><div class="info-key">방법</div><div class="info-val">Tech의 Phase 2 프로젝트 오픈 전, 개발 용어 및 데이터 컬럼 값, 개발 프로세스 등을 이해할 수 있는 강의 오픈</div></div>
+        <div class="notice">
+          <span class="notice-icon">❗</span>
+          <span>Tech 측에 문의 필요 — 보안 중심 (예: Phase 2 전 단계, 우리가 준비해야 할 사항들)</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ══ 7. 넥스트 스텝 — 커뮤니케이션 & 공표 ══ -->
+  <section id="comms">
+    <div class="section-header">
+      <div class="section-num bg-rose-lt c-rose">7</div>
+      <div>
+        <div class="section-title">넥스트 스텝 — 커뮤니케이션 &amp; 공표</div>
+        <div class="section-subtitle">어떤 앵글로, 어떤 방법으로 전달할 것인가</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-tag bg-rose-lt c-rose">7-1</span><span class="card-title">앵글</span></div>
+      <div class="card-body">
+        <div class="info-row"><div class="info-key">질문</div><div class="info-val">AX, 이게 대체 무슨 일일까? — 지금보다 더 일을 잘하고 싶다면?</div></div>
+        <div class="info-row"><div class="info-key">비유</div><div class="info-val">부스터스 평생교육원 — 모였다, 흩어졌다! 자유로운 커뮤니티를 만들며 배워봐요</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-tag bg-rose-lt c-rose">7-2</span><span class="card-title">방법</span></div>
+      <div class="card-body">
+        <div class="grid2">
+          <div class="group-card bg-accent-lt" style="border-color:#C7CEEA;">
+            <div class="group-label c-accent">자유 AX 대학 (가칭)</div>
+            <div class="group-name">배움에는 끝이 없다</div>
+            <ul class="group-items">
+              <li>정규 클래스 (그룹 1 대상)</li>
+              <li>심화 클래스 (개발자 중심)</li>
+            </ul>
+          </div>
+          <div class="group-card bg-green-lt" style="border-color:#6EE7B7;">
+            <div class="group-label c-green">배움을 나눈다</div>
+            <div class="group-name">동아리 자유 개설</div>
+            <ul class="group-items">
+              <li>818 클럽 활용</li>
+            </ul>
+          </div>
+        </div>
+        <div class="note" style="margin-top:1rem;">
+          세 번째 방법은 아직 논의 중입니다 — 확정되는 대로 추가합니다.
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-tag bg-purple-lt c-purple">7-3</span><span class="card-title">공표</span></div>
       <div class="card-body">
         <p style="font-size:14px; color:var(--text-main); line-height:1.8;">
           클래스 오픈 전, 커뮤니티가 사라진다는 공표가 필요합니다.
@@ -511,8 +634,9 @@
     <div class="philosophy-banner">
       <div class="quote">"이제 부스터스 AX가 개인화됩니다"</div>
       <div class="quote-sub">
+        조급함이 아니라 "일을 더 잘하고 싶다"는 질문 위에 다시 세운 계획입니다.
         커뮤니티는 강제로 묶어 관리하는 조직 단위가 아니라, 필요할 때 기댈 수 있는 비빌언덕으로 남습니다.
-        배움은 클래스818(자유 AX 대학)이, 협업 인프라는 2 Group(SCM·채널·디자인)이 각각 맡습니다.
+        배움은 자유 AX 대학이, 협업 인프라는 Group 2(SCM·Tech)가 각각 맡습니다.
       </div>
     </div>
   </section>
